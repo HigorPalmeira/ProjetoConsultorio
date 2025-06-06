@@ -19,7 +19,7 @@ public class Validator {
     private static final String EMAIL_REGEX = 
             "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
+    private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
     
     private static final LocalDate LIMITE_INFERIOR_DATA_NASCIMENTO = LocalDate.of(1900, 1, 1);
     private static final long ANO_MINIMO = 5;
@@ -29,7 +29,7 @@ public class Validator {
             "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", 
             "RR", "SC", "SP", "SE", "TO"
     );
-    private static final String REGEX_CRM = "^CRM/[A-Z]{2}\\s(\\d{6})$";
+    private static final String REGEX_CRM = "^CRM/([A-Z]{2})\\s(\\d{6})$";
     private static final Pattern PATTERN_CRM = Pattern.compile(REGEX_CRM);
 
     public static boolean isCpf(final String cpf) {
@@ -73,7 +73,7 @@ public class Validator {
         
         if (email == null || email.length() > 255) return false;
         
-        Matcher matcher = PATTERN.matcher(email);
+        Matcher matcher = PATTERN_EMAIL.matcher(email);
         return matcher.matches();
         
     }
@@ -90,14 +90,14 @@ public class Validator {
         
     }
     
-    public static boolean isCrm(final String crm) {
+    public static boolean isCrm(String crm) {
         
         if (crm == null || crm.trim().isEmpty()) {
             return false;
         }
-        
+
         Matcher matcher = PATTERN_CRM.matcher(crm.trim());
-        
+
         if (!matcher.matches()) {
             return false;
         }
@@ -105,18 +105,18 @@ public class Validator {
         String uf = matcher.group(1);
         String numero = matcher.group(2);
         
+        try {
+            Integer.parseInt(numero);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
         if (!UFS_VALIDAS.contains(uf)) {
             return false;
         }
         
-        try {
-            Integer.parseInt(numero);
-            
-        } catch(NumberFormatException e) {
-            return false;
-        }
-        
         return true;
+        
     }
     
 }

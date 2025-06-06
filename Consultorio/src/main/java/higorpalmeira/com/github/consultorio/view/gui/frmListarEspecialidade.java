@@ -236,7 +236,8 @@ public class frmListarEspecialidade extends javax.swing.JFrame {
 
     private void carregarTabela() {
         
-        EspecialidadeController.listarEspecialidades(jTEspecialidades);
+        //EspecialidadeController.listarEspecialidades(jTEspecialidades);
+        JOptionPane.showMessageDialog(null, "Não disponível no momento!", "Indisponível!", 2);
         
     }
     
@@ -256,7 +257,7 @@ public class frmListarEspecialidade extends javax.swing.JFrame {
     }
     
     private void editarEspecialidade() {
-        
+        /*
         EspecialidadeController.editarEspecialidade(Integer.parseInt(txtId.getText()), 
                                                     currentDescricao, 
                                                     txtDescricao.getText());
@@ -264,6 +265,8 @@ public class frmListarEspecialidade extends javax.swing.JFrame {
         this.clearAllFields();
         this.carregarTabela();
         this.btnEditar.setVisible(false);
+        */
+        JOptionPane.showMessageDialog(null, "Não disponível no momento!", "Indisponível!", 2);
         
     }
     
@@ -334,13 +337,14 @@ public class frmListarEspecialidade extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
-        // this.excluirEspecialidade();
+        /*
         EspecialidadeController.excluirEspecialidade(Integer.parseInt(txtId.getText()), txtDescricao.getText());
         this.carregarTabela();
         this.hiddenButtons();
         this.txtId.setEnabled(true);
         this.clearAllFields();
+        */
+        JOptionPane.showMessageDialog(null, "Não disponível no momento!", "Indisponível!", 2);
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 

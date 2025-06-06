@@ -4,8 +4,11 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.service;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
@@ -83,7 +86,17 @@ public class PacienteServiceImpl implements IPacienteService {
 
     @Override
     public boolean deletarPaciente(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (id < 0) return false;
+        
+        boolean deletado = false;
+        try {
+            deletado = pacienteDAO.delete(id) > 0;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(PacienteServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return deletado;
     }
 
     @Override

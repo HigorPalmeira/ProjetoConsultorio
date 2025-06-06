@@ -61,7 +61,7 @@ public class Validator {
 
     public static boolean isEmail(final String email) {
         
-        if (email == null) return false;
+        if (email == null || email.length() > 255) return false;
         
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();

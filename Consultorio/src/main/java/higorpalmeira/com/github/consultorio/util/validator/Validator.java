@@ -18,7 +18,8 @@ public class Validator {
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    public static boolean isCpf(final String cpf) {
+    public static boolean isCpf(final String cpf) 
+    {
         if (cpf.trim().isBlank() || (cpf.trim().length() != 14 && cpf.trim().length() != 11)) return false;
         
         String cpfAlter = cpf;

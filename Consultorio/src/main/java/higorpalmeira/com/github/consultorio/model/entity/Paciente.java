@@ -4,7 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -14,7 +14,7 @@ public class Paciente {
     private int id;
     private String nome;
     private String cpf;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private String telefone;
     private String email;
 
@@ -42,11 +42,11 @@ public class Paciente {
         this.cpf = cpf;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

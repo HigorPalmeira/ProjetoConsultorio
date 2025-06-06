@@ -79,7 +79,7 @@ public class PacienteController {
         
         Paciente paciente = pacienteService.buscarPacientePorId(id);
         
-        if (paciente == null) {
+        if (paciente == null || (paciente.getId() == 0 && paciente.getNome() == null)) {
             System.out.printf("O paciente com o ID '%d' não existe no sistema!\n", id);
             
         } else {

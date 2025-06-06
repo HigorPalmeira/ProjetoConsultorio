@@ -101,7 +101,13 @@ public class PacienteServiceImpl implements IPacienteService {
 
     @Override
     public List<Paciente> listarTodosPaciente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        List<Paciente> listaPacientes = pacienteDAO.selectAll();
+        
+        if (!listaPacientes.isEmpty()) return null;
+        
+        return listaPacientes;
+        
     }
 
     @Override

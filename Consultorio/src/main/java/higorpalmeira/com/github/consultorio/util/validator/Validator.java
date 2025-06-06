@@ -4,6 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.util.validator;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,8 +19,7 @@ public class Validator {
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    public static boolean isCpf(final String cpf) 
-    {
+    public static boolean isCpf(final String cpf) {
         if (cpf.trim().isBlank() || (cpf.trim().length() != 14 && cpf.trim().length() != 11)) return false;
         
         String cpfAlter = cpf;
@@ -62,6 +62,17 @@ public class Validator {
         
         Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
+        
+    }
+    
+    public static boolean isDataNascimento(LocalDate dataNascimento) {
+        
+        LocalDate hoje = LocalDate.now();
+        
+        LocalDate limiteInferior = LocalDate.of(1900, 1, 1);
+        LocalDate limiteSuperior = hoje.minusYears(5);
+        
+        return dataNascimento.isAfter(limiteInferior) && dataNascimento.isBefore(limiteSuperior);
         
     }
     

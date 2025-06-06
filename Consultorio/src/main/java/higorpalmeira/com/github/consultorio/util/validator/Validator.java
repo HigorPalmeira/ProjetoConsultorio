@@ -5,6 +5,8 @@
 package main.java.higorpalmeira.com.github.consultorio.util.validator;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +23,14 @@ public class Validator {
     
     private static final LocalDate LIMITE_INFERIOR_DATA_NASCIMENTO = LocalDate.of(1900, 1, 1);
     private static final long ANO_MINIMO = 5;
+    
+    private static final List<String> UFS_VALIDAS = Arrays.asList(
+            "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", 
+            "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", 
+            "RR", "SC", "SP", "SE", "TO"
+    );
+    private static final String REGEX_CRM = "^CRM/[A-Z]{2}\\s(\\d{6})$";
+    private static final Pattern PATTERN_CRM = Pattern.compile(REGEX_CRM);
 
     public static boolean isCpf(final String cpf) {
         if (cpf.trim().isBlank() || (cpf.trim().length() != 14 && cpf.trim().length() != 11)) return false;
@@ -78,6 +88,35 @@ public class Validator {
         
         return dataNascimento.isAfter(LIMITE_INFERIOR_DATA_NASCIMENTO) && dataNascimento.isBefore(limiteSuperior);
         
+    }
+    
+    public static boolean isCrm(final String crm) {
+        
+        if (crm == null || crm.trim().isEmpty()) {
+            return false;
+        }
+        
+        Matcher matcher = PATTERN_CRM.matcher(crm.trim());
+        
+        if (!matcher.matches()) {
+            return false;
+        }
+        
+        String uf = matcher.group(1);
+        String numero = matcher.group(2);
+        
+        if (!UFS_VALIDAS.contains(uf)) {
+            return false;
+        }
+        
+        try {
+            Integer.parseInt(numero);
+            
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        
+        return true;
     }
     
 }

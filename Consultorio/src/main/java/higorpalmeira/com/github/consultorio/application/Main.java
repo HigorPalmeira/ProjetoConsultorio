@@ -17,6 +17,10 @@ public class Main {
     
     public static void main(String[] args) {
         
+        menuEspecialidade();
+    }
+    
+    private static void menuEspecialidade() {
         boolean running = true;
         
         while(running) {
@@ -26,33 +30,19 @@ public class Main {
             int opcao = scanner.nextInt();
             
             switch(opcao) {
-                case 1:
-                    criarEspecialidade();
-                    break;
+                case 1 -> criarEspecialidade();
                     
-                case 2:
-                    atualizarEspecialidade();
-                    break;
+                case 2 -> atualizarEspecialidade();
                     
-                case 3:
-                    excluirEspecialidade();
-                    break;
+                case 3 -> excluirEspecialidade();
                     
-                case 4:
-                    listarEspecialidade();
-                    break;
+                case 4 -> listarEspecialidade();
                     
-                case 9:
-                    running = false;
-                    break;
+                case 9 -> running = false;
                     
-                default:
-                    System.out.println("Opcao inva'lida!");
-                    break;
+                default -> System.out.println("Opcao inva'lida!");
             }
-            
         }
-        
     }
     
     private static void criarEspecialidade() {
@@ -77,20 +67,6 @@ public class Main {
             EspecialidadeController.listarEspecialidade(id, null);
         }
         
-        
-        /*
-        List<Especialidade> listaEspecialidade = EspecialidadeService.selectAll();
-        
-        if (listaEspecialidade.isEmpty()) {
-            System.out.println("Nao ha' especialidades salvas no sistema!");
-        } else {
-            
-            for (Especialidade especialidade : listaEspecialidade) {
-                System.out.println(especialidade.toString());
-            }
-            
-        }
-        */
     }
     
     private static void excluirEspecialidade() {

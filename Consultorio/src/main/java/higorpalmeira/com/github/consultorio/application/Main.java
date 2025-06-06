@@ -7,9 +7,12 @@ package main.java.higorpalmeira.com.github.consultorio.application;
 import java.time.LocalDate;
 import java.util.Scanner;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
+import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.model.dao.EspecialidadeDAO;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
+import main.java.higorpalmeira.com.github.consultorio.service.MedicoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
 
 /**
@@ -21,14 +24,133 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static PacienteController pacienteController;
     static EspecialidadeController especialidadeController;
+    static MedicoController medicoController;
     
     public static void main(String[] args) {
         
         pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
         especialidadeController = new EspecialidadeController(new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO()));
+        medicoController = new MedicoController(new MedicoServiceImpl(DAOFactory.criarMedicoDAO()));
         
         menuEspecialidade();
+        menuMedico();
         menuPaciente();
+    }
+    
+    private static void menuMedico() {
+        boolean running = true;
+        
+        while(running) {
+            System.out.println("===\tMENU MÉDICO\t===");
+            System.out.println("[ 1 ] Criar Médico \n[ 2 ] Atualizar Médico \n[ 3 ] Excluir Médico \n[ 4 ] Listar Médicos \n[ 9 ] Sair");
+            int opcao = scanner.nextInt();
+            
+            switch(opcao) {
+                case 1 -> criarMedico();
+                    
+                case 2 -> atualizarMedico();
+                    
+                case 3 -> excluirMedico();
+                
+                case 4 -> listarMedicos();
+                    
+                case 9 -> running = false;
+                    
+                default -> System.out.println("Opção inva'lida!");
+            }
+        }
+    }
+    
+    private static void criarMedico() {
+        String nome, crm, telefone, email;
+        int idEspecialidade;
+        
+        System.out.println("===\tCriar Médico\t===");
+        
+        System.out.println("Informe o nome do médico:");
+        nome = scanner.next().trim();
+        
+        System.out.println("Informe o CRM do médico: ");
+        crm = scanner.next().trim();
+        
+        System.out.println("Informe o telefone do médico: ");
+        telefone = scanner.next();
+        
+        System.out.println("Informe o email do médico: ");
+        email = scanner.next().trim();
+        
+        do {
+            especialidadeController.listarTodasEspecialidades();
+            System.out.println("Informe o id da especialidade do médico (se não encontrar digite -1): ");
+            idEspecialidade = scanner.nextInt();
+
+            if (idEspecialidade == -1) {
+                criarEspecialidade();
+            }
+        } while(idEspecialidade == -1);
+        
+        medicoController.criarMedico(nome, crm, idEspecialidade, telefone, email);
+    }
+    
+    private static void atualizarMedico() {
+        String nome, crm, telefone, email;
+        int id, idEspecialidade;
+        
+        System.out.println("===\tAtualizar Médico\t===");
+        
+        System.out.println("Informe o ID do médico: ");
+        id = scanner.nextInt();
+        
+        System.out.println("Informe o nome do médico: ");
+        nome = scanner.next().trim();
+        
+        System.out.println("Informe o CRM do médico: ");
+        crm = scanner.next().trim();
+        
+        System.out.println("Informe o telefone do médico: ");
+        telefone = scanner.next().trim();
+        
+        System.out.println("Informe o email do médico: ");
+        email = scanner.next().trim();
+        
+        do {
+            especialidadeController.listarTodasEspecialidades();
+            System.out.println("Informe o id da especialidade do médico (se não encontrar digite -1): ");
+            idEspecialidade = scanner.nextInt();
+
+            if (idEspecialidade == -1) {
+                criarEspecialidade();
+            }
+        } while(idEspecialidade == -1);
+        
+        medicoController.atualizarMedico(id, nome, crm, idEspecialidade, telefone, email);
+        
+    }
+    
+    private static void excluirMedico() {
+        int id;
+        
+        System.out.println("===\tExcluir Médico\t===");
+        
+        System.out.println("Informe o ID do médico a ser deletado: ");
+        id = scanner.nextInt();
+        
+        medicoController.deletarMedico(id);
+        
+    }
+    
+    private static void listarMedicos() {
+        
+        System.out.println("Deseja listar (1) TODOS ou (2) ESPECÍFICO? ");
+        if (scanner.nextInt() == 1) {
+            medicoController.listarTodosMedicos();
+            
+        } else {
+            System.out.println("Informe o ID do médico para ser listado: ");
+            int id = scanner.nextInt();
+            medicoController.buscarMedicoPorId(id);
+        }
+        
     }
     
     private static void menuPaciente() {

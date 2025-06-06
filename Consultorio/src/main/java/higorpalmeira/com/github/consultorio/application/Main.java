@@ -117,6 +117,17 @@ public class Main {
         
     }
     
+    private static void excluirPaciente() {
+        int id;
+        
+        System.out.println("===\tExcluir Paciente\t===");
+        
+        System.out.println("Informe o ID do paciente a ser deletado: ");
+        id = scanner.nextInt();
+        
+        pacienteController.deletarPaciente(id);
+    }
+    
     private static void menuEspecialidade() {
         boolean running = true;
         

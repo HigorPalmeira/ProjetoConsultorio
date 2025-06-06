@@ -10,7 +10,6 @@ import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeCo
 import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
-import main.java.higorpalmeira.com.github.consultorio.model.dao.EspecialidadeDAO;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.MedicoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
@@ -65,20 +64,21 @@ public class Main {
         String nome, crm, telefone, email;
         int idEspecialidade;
         
+        scanner.nextLine();
+        
         System.out.println("===\tCriar Médico\t===");
         
         System.out.println("Informe o nome do médico:");
-        nome = scanner.next().trim();
+        nome = scanner.nextLine();
         
         System.out.println("Informe o CRM do médico: ");
-        crm = scanner.next().trim();
-        scanner.nextLine();
+        crm = scanner.nextLine();
         
         System.out.println("Informe o telefone do médico: ");
-        telefone = scanner.next();
+        telefone = scanner.nextLine();
         
         System.out.println("Informe o email do médico: ");
-        email = scanner.next().trim();
+        email = scanner.nextLine();
         
         do {
             especialidadeController.listarTodasEspecialidades();
@@ -101,19 +101,19 @@ public class Main {
         
         System.out.println("Informe o ID do médico: ");
         id = scanner.nextInt();
+        scanner.next();
         
         System.out.println("Informe o nome do médico: ");
-        nome = scanner.next().trim();
+        nome = scanner.nextLine();
         
         System.out.println("Informe o CRM do médico: ");
-        crm = scanner.next().trim();
-        scanner.nextLine();
+        crm = scanner.nextLine();
         
         System.out.println("Informe o telefone do médico: ");
-        telefone = scanner.next().trim();
+        telefone = scanner.nextLine();
         
         System.out.println("Informe o email do médico: ");
-        email = scanner.next().trim();
+        email = scanner.nextLine();
         
         do {
             especialidadeController.listarTodasEspecialidades();
@@ -183,13 +183,15 @@ public class Main {
         String nome, cpf, telefone, email;
         LocalDate dataNascimento;
         
+        scanner.nextLine();
+        
         System.out.println("===\tCriar Paciente\t===");
         
         System.out.println("Informe o nome do paciente (max: 255): ");
-        nome = scanner.next();
+        nome = scanner.nextLine();
         
         System.out.println("Informe o CPF do paciente (###.###.###-##): ");
-        cpf = scanner.next();
+        cpf = scanner.nextLine();
         
         System.out.println("Informe a data de nascimento do paciente: ");
         System.out.println("- Dia: ");
@@ -201,13 +203,10 @@ public class Main {
         dataNascimento = LocalDate.of(ano, mes, dia);
         
         System.out.println("Informe o telefone do paciente: ");
-        telefone = scanner.next().trim();
-        scanner.nextLine();
+        telefone = scanner.nextLine().trim();
         
         System.out.println("Informe o email do paciente: ");
-        email = scanner.next();
-        
-        //System.out.println("Nome: "+ nome +"\nCPF: "+cpf+ "\nDATA_NASCIMENTO: " + dataNascimento.toString() + "\nTELEFONE: " + telefone + "\nEMAIL: " + email);
+        email = scanner.nextLine();
         
         pacienteController.criarPaciente(nome, cpf, dataNascimento, telefone, email);
         
@@ -222,12 +221,13 @@ public class Main {
         
         System.out.println("Informe o ID do paciente: ");
         id = scanner.nextInt();
+        scanner.next();
         
         System.out.println("Informe o nome do paciente (max: 255): ");
-        nome = scanner.next();
+        nome = scanner.nextLine();
         
         System.out.println("Informe o CPF do paciente (###.###.###-##): ");
-        cpf = scanner.next();
+        cpf = scanner.nextLine();
         
         System.out.println("Informe a data de nascimento do paciente: ");
         System.out.println("- Dia: ");
@@ -239,10 +239,10 @@ public class Main {
         dataNascimento = LocalDate.of(ano, mes, dia);
         
         System.out.println("Informe o telefone do paciente: ");
-        telefone = scanner.next();
+        telefone = scanner.nextLine();
         
         System.out.println("Informe o email do paciente: ");
-        email = scanner.next();
+        email = scanner.nextLine();
         
         pacienteController.atualizarPaciente(id, nome, cpf, dataNascimento, telefone, email);
         
@@ -300,9 +300,11 @@ public class Main {
     private static void criarEspecialidade() {
         String descricao;
         
+        scanner.nextLine();
+        
         System.out.println("===\tCriar Especialidade\t===");
         System.out.println("Informe a descricao (max:100): ");
-        descricao = scanner.next();
+        descricao = scanner.nextLine();
         
         especialidadeController.criarEspecialidade(descricao);
         
@@ -341,7 +343,7 @@ public class Main {
         id = scanner.nextInt();
         
         System.out.println("Informe a nova descricao (max: 100): ");
-        descricao = scanner.next();
+        descricao = scanner.nextLine();
         
         especialidadeController.atualizarEspecialidade(id, descricao);
         

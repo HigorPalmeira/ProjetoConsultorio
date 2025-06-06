@@ -28,7 +28,7 @@ public class Main {
         especialidadeController = new EspecialidadeController(new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO()));
         
         menuEspecialidade();
-        //menuPaciente();
+        menuPaciente();
     }
     
     private static void menuPaciente() {

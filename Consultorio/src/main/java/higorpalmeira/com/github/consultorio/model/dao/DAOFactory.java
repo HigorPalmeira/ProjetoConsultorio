@@ -22,4 +22,10 @@ public class DAOFactory {
         
     }
     
+    public static MedicoDAO criarMedicoDAO() {
+        
+        return new MedicoDAOJDBC();
+        
+    }
+    
 }

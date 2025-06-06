@@ -70,6 +70,8 @@ public class Validator {
     
     public static boolean isDataNascimento(LocalDate dataNascimento) {
         
+        if (dataNascimento == null) return false;
+        
         LocalDate hoje = LocalDate.now();
         
         LocalDate limiteSuperior = hoje.minusYears(ANO_MINIMO);

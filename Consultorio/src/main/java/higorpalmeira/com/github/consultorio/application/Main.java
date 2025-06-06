@@ -83,6 +83,37 @@ public class Main {
     }
     
     private static void atualizarPaciente() {
+        String nome, cpf, telefone, email;
+        LocalDate dataNascimento;
+        int id;
+        
+        System.out.println("===\tAtualizar Paciente\t===");
+        
+        System.out.println("Informe o ID do paciente: ");
+        id = scanner.nextInt();
+        
+        System.out.println("Informe o nome do paciente (max: 255): ");
+        nome = scanner.next();
+        
+        System.out.println("Informe o CPF do paciente (###.###.###-##): ");
+        cpf = scanner.next();
+        
+        System.out.println("Informe a data de nascimento do paciente: ");
+        System.out.println("- Dia: ");
+        int dia = scanner.nextInt();
+        System.out.println("- Mês: ");
+        int mes = scanner.nextInt();
+        System.out.println("- Ano: ");
+        int ano = scanner.nextInt();
+        dataNascimento = LocalDate.of(ano, mes, dia);
+        
+        System.out.println("Informe o telefone do paciente: ");
+        telefone = scanner.next();
+        
+        System.out.println("Informe o email do paciente: ");
+        email = scanner.next();
+        
+        pacienteController.atualizarPaciente(id, nome, cpf, dataNascimento, telefone, email);
         
     }
     

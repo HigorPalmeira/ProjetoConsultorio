@@ -13,14 +13,14 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
  */
 public interface IMedicoService {
     
-    boolean criarMedico();
+    boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email);
     
-    boolean atualizarMedico();
+    boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String telefone, String email);
     
-    boolean deletarMedico();
+    boolean deletarMedico(int id);
     
     List<Medico> listarTodosMedicos();
     
-    Medico buscarMedicoPorId();
+    Medico buscarMedicoPorId(int id);
     
 }

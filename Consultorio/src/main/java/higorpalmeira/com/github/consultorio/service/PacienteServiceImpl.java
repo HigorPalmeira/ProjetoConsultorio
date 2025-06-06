@@ -4,7 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
@@ -23,24 +23,36 @@ public class PacienteServiceImpl implements IPacienteService {
     }
 
     @Override
-    public boolean criarPaciente(String nome, String cpf, Date dataNascimento, 
+    public boolean criarPaciente(String nome, String cpf, LocalDate dataNascimento, 
                                     String telefone, String email) {
         
         // verificar nome
-        if (nome == null || nome.trim().isBlank() || nome.length() > 255) return false;
+        if (nome == null || nome.trim().isBlank() || nome.trim().length() > 255) return false;
         
         // verificar cpf
         if ( ! Validator.isCpf(cpf) ) return false;
         
         // verificar data de nascimento
-        if ( dataNascimento == null ) return false;
+        if ( ! Validator.isDataNascimento(dataNascimento) ) return false;
         
+        // verificar email
+        if ( ! Validator.isEmail(email) ) return false;
         
+        // verificar telefone
+        if (telefone == null || telefone.trim().isBlank() || nome.trim().length() > 20) return false;
         
+        Paciente paciente = new Paciente();
+        paciente.setNome(nome);
+        paciente.setCpf(cpf);
+        paciente.setDataNascimento(dataNascimento);
+        paciente.setTelefone(telefone);
+        paciente.setEmail(email);
+        
+        return pacienteDAO.insert(paciente) > 0;
     }
 
     @Override
-    public boolean atualizarPaciente(int id, String nome, String cpf, Date dataNascimento, String telefone, String email) {
+    public boolean atualizarPaciente(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

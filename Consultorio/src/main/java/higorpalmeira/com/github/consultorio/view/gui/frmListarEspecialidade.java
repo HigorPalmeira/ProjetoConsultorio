@@ -5,12 +5,8 @@
 package main.java.higorpalmeira.com.github.consultorio.view.gui;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
-import main.java.higorpalmeira.com.github.consultorio.model.entity.Especialidade;
-import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeService;
 
 /**
  *

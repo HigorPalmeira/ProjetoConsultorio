@@ -102,11 +102,7 @@ public class PacienteServiceImpl implements IPacienteService {
     @Override
     public List<Paciente> listarTodosPaciente() {
         
-        List<Paciente> listaPacientes = pacienteDAO.selectAll();
-        
-        if (listaPacientes.isEmpty()) return null;
-        
-        return listaPacientes;
+        return pacienteDAO.selectAll();
         
     }
 

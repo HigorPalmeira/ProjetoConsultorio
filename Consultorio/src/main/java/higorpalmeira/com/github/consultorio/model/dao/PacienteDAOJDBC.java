@@ -5,6 +5,7 @@
 package main.java.higorpalmeira.com.github.consultorio.model.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 
@@ -80,12 +81,57 @@ public class PacienteDAOJDBC implements PacienteDAO{
 
     @Override
     public List<Paciente> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         ResultSet rset;
+         String select = "SELECT * FROM paciente ORDER BY id ASC";
+         List<Paciente> listaPacientes = new ArrayList<>();
+         try {
+             
+             rset = DAOGenerico.executarConsulta(select);
+             while(rset.next()) {
+                 Paciente paciente = new Paciente();
+                 paciente.setId( rset.getInt("id") );
+                 paciente.setNome( rset.getString("nome") );
+                 paciente.setDataNascimento( rset.getDate("data_nascimento") );
+                 paciente.setCpf( rset.getString("cpf") );
+                 paciente.setTelefone( rset.getString("telefone") );
+                 paciente.setEmail( rset.getString("email") );
+                 
+                 listaPacientes.add(paciente);
+             }
+             
+         } catch(Exception e) {
+             e.printStackTrace();
+         }
+         
+         return listaPacientes;
     }
 
     @Override
     public Paciente selectId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM paciente ")
+                .append("WHERE id = ?");
+        String select = sqlBuilder.toString();
+        Paciente paciente = new Paciente();
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, id);
+            while(rset.next()) {
+                paciente.setId( rset.getInt("id") );
+                paciente.setNome( rset.getString("nome") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento") );
+                paciente.setCpf( rset.getString("cpf") );
+                paciente.setTelefone( rset.getString("telefone") );
+                paciente.setEmail( rset.getString("email") );
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return paciente;
     }
     
 }

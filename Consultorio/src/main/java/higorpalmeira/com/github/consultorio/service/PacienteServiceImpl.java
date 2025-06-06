@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
  *
@@ -22,8 +23,20 @@ public class PacienteServiceImpl implements IPacienteService {
     }
 
     @Override
-    public boolean criarPaciente(String nome, String cpf, Date dataNascimento, String telefone, String email) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean criarPaciente(String nome, String cpf, Date dataNascimento, 
+                                    String telefone, String email) {
+        
+        // verificar nome
+        if (nome == null || nome.trim().isBlank() || nome.length() > 255) return false;
+        
+        // verificar cpf
+        if ( ! Validator.isCpf(cpf) ) return false;
+        
+        // verificar data de nascimento
+        if ( dataNascimento == null ) return false;
+        
+        
+        
     }
 
     @Override

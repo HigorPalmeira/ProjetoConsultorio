@@ -124,17 +124,12 @@ public class frmCadastroEspecialidade extends javax.swing.JFrame {
     }
     
     private void salvarEspecialidade() {
-        
+        /*
         EspecialidadeController.criarEspecialidade(txtDescricao.getText(), this);
         this.clearAllFields();
-        /*
-        if ( EspecialidadeService.insert(txtDescricao.getText()) ) {
-            JOptionPane.showMessageDialog(null, "Especialidade salva com sucesso!", "Sucesso", 1);
-            this.clearAllFields();
-        } else {
-            JOptionPane.showMessageDialog(null, "A especialidade não pode ser salva!");
-        }
         */
+        
+        JOptionPane.showMessageDialog(null, "Não disponível no momento!", "Indisponível!", 2);
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

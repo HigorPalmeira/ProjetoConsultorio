@@ -1,0 +1,6 @@
+# NetBeans
+/Consultorio/nbproject/private/
+/Consultorio/build/
+# Database credentials
+config.properties
+database.properties

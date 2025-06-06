@@ -72,6 +72,7 @@ public class Main {
         
         System.out.println("Informe o CRM do médico: ");
         crm = scanner.next().trim();
+        scanner.nextLine();
         
         System.out.println("Informe o telefone do médico: ");
         telefone = scanner.next();
@@ -106,6 +107,7 @@ public class Main {
         
         System.out.println("Informe o CRM do médico: ");
         crm = scanner.next().trim();
+        scanner.nextLine();
         
         System.out.println("Informe o telefone do médico: ");
         telefone = scanner.next().trim();

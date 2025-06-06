@@ -37,12 +37,45 @@ public class PacienteDAOJDBC implements PacienteDAO{
 
     @Override
     public int update(Paciente paciente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("UPDATE paciente SET ")
+                .append("nome = ?, ")
+                .append("cpf = ?, ")
+                .append("data_nascimento = ?, ")
+                .append("telefone = ?, ")
+                .append("email = ?, ")
+                .append("WHERE id = ?");
+        String update = sqlBuilder.toString();
+        
+        int line = 0;
+        try {
+            
+            line = DAOGenerico.executarComando(update, paciente.getNome(),
+                                                        paciente.getCpf(),
+                                                        paciente.getDataNascimento(),
+                                                        paciente.getTelefone(),
+                                                        paciente.getEmail(),
+                                                        paciente.getId());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return line;
     }
 
     @Override
     public int delete(int id) throws ClassNotFoundException, SQLException, SQLIntegrityConstraintViolationException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("DELETE FROM paciente ")
+                .append("WHERE id = ?");
+        String delete = sqlBuilder.toString();
+        
+        int line = 0;
+        line = DAOGenerico.executarComando(delete, id);
+        return line;
     }
 
     @Override

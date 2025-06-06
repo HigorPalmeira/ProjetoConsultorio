@@ -9,6 +9,7 @@ import java.util.Scanner;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
 
 /**
@@ -19,12 +20,15 @@ public class Main {
 
     static Scanner scanner = new Scanner(System.in);
     static PacienteController pacienteController;
+    static EspecialidadeController especialidadeController;
     
     public static void main(String[] args) {
         
         pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
+        especialidadeController = new EspecialidadeController(new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO()));
         
         menuEspecialidade();
+        //menuPaciente();
     }
     
     private static void menuPaciente() {
@@ -73,10 +77,13 @@ public class Main {
         dataNascimento = LocalDate.of(ano, mes, dia);
         
         System.out.println("Informe o telefone do paciente: ");
-        telefone = scanner.next();
+        telefone = scanner.next().trim();
+        scanner.nextLine();
         
         System.out.println("Informe o email do paciente: ");
         email = scanner.next();
+        
+        //System.out.println("Nome: "+ nome +"\nCPF: "+cpf+ "\nDATA_NASCIMENTO: " + dataNascimento.toString() + "\nTELEFONE: " + telefone + "\nEMAIL: " + email);
         
         pacienteController.criarPaciente(nome, cpf, dataNascimento, telefone, email);
         
@@ -128,13 +135,26 @@ public class Main {
         pacienteController.deletarPaciente(id);
     }
     
+    private static void listarPacientes() {
+        
+        System.out.println("Deseja listar (1) TODOS ou (2) ESPECÍFICO? ");
+        if (scanner.nextInt() == 1) {
+            pacienteController.listarTodosPacientes();
+            
+        } else {
+            System.out.println("Informe o ID do paciente para ser listado: ");
+            int id = scanner.nextInt();
+            pacienteController.buscarPacientePorId(id);
+        }
+    }
+    
     private static void menuEspecialidade() {
         boolean running = true;
         
         while(running) {
             
             System.out.println("===\tMENU ESPECIALIDADE\t===");
-            System.out.println("[ 1 ] Criar Especialidade \n[ 2 ] Atualizar Especialidade \n[ 3 ] Excluir Especialidade \n[ 4 ] Listar Especialidades");
+            System.out.println("[ 1 ] Criar Especialidade \n[ 2 ] Atualizar Especialidade \n[ 3 ] Excluir Especialidade \n[ 4 ] Listar Especialidades \n[ 9 ] Sair");
             int opcao = scanner.nextInt();
             
             switch(opcao) {
@@ -160,7 +180,7 @@ public class Main {
         System.out.println("Informe a descricao (max:100): ");
         descricao = scanner.next();
         
-        EspecialidadeController.criarEspecialidade(descricao, null);
+        especialidadeController.criarEspecialidade(descricao);
         
     }
     
@@ -168,11 +188,13 @@ public class Main {
         
         System.out.println("Deseja listar (1) TODAS ou (2) ESPECÍFICA? ");
         if (scanner.nextInt() == 1) {
-            EspecialidadeController.listarEspecialidades();
+            especialidadeController.listarTodasEspecialidades();
+            
         } else {
             System.out.println("Informe o ID da especialidade para ser listada: ");
             int id = scanner.nextInt();
-            EspecialidadeController.listarEspecialidade(id, null);
+            
+            especialidadeController.buscarEspecialidadePorId(id);
         }
         
     }
@@ -183,7 +205,7 @@ public class Main {
         System.out.println("Informe o ID da especialidade: ");
         id = scanner.nextInt();
         
-        EspecialidadeController.excluirEspecialidade(id, null);
+        especialidadeController.deletarEspecialidade(id);
         
     }
     
@@ -197,7 +219,7 @@ public class Main {
         System.out.println("Informe a nova descricao (max: 100): ");
         descricao = scanner.next();
         
-        EspecialidadeController.editarEspecialidade(id, null, descricao);
+        especialidadeController.atualizarEspecialidade(id, descricao);
         
     }
     

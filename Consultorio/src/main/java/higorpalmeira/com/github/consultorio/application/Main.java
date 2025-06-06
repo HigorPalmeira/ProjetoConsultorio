@@ -4,8 +4,12 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.application;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
+import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
+import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
 
 /**
  *
@@ -14,10 +18,72 @@ import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeCo
 public class Main {
 
     static Scanner scanner = new Scanner(System.in);
+    static PacienteController pacienteController;
     
     public static void main(String[] args) {
         
+        pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
+        
         menuEspecialidade();
+    }
+    
+    private static void menuPaciente() {
+        boolean running = true;
+        
+        while(running) {
+            System.out.println("===\tMENU PACIENTE\t===");
+            System.out.println("[ 1 ] Criar Paciente \n[ 2 ] Atualizar Paciente \n[ 3 ] Excluir Especialidade \n[ 4 ] Listar Pacientes \n[ 9 ] Sair");
+            int opcao = scanner.nextInt();
+            
+            switch(opcao) {
+                case 1 -> criarPaciente();
+                    
+                case 2 -> atualizarPaciente();
+                    
+                case 3 -> excluirPaciente();
+                    
+                case 4 -> listarPacientes();
+                    
+                case 9 -> running = false;
+                    
+                default -> System.out.println("Opção inva'lida!");
+            }
+        }
+    }
+    
+    private static void criarPaciente() {
+        String nome, cpf, telefone, email;
+        LocalDate dataNascimento;
+        
+        System.out.println("===\tCriar Paciente\t===");
+        
+        System.out.println("Informe o nome do paciente (max: 255): ");
+        nome = scanner.next();
+        
+        System.out.println("Informe o CPF do paciente (###.###.###-##): ");
+        cpf = scanner.next();
+        
+        System.out.println("Informe a data de nascimento do paciente: ");
+        System.out.println("- Dia: ");
+        int dia = scanner.nextInt();
+        System.out.println("- Mês: ");
+        int mes = scanner.nextInt();
+        System.out.println("- Ano: ");
+        int ano = scanner.nextInt();
+        dataNascimento = LocalDate.of(ano, mes, dia);
+        
+        System.out.println("Informe o telefone do paciente: ");
+        telefone = scanner.next();
+        
+        System.out.println("Informe o email do paciente: ");
+        email = scanner.next();
+        
+        pacienteController.criarPaciente(nome, cpf, dataNascimento, telefone, email);
+        
+    }
+    
+    private static void atualizarPaciente() {
+        
     }
     
     private static void menuEspecialidade() {
@@ -25,7 +91,7 @@ public class Main {
         
         while(running) {
             
-            System.out.println("===\tMENU\t===");
+            System.out.println("===\tMENU ESPECIALIDADE\t===");
             System.out.println("[ 1 ] Criar Especialidade \n[ 2 ] Atualizar Especialidade \n[ 3 ] Excluir Especialidade \n[ 4 ] Listar Especialidades");
             int opcao = scanner.nextInt();
             

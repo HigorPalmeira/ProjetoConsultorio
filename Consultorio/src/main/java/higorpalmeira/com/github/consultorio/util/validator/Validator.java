@@ -4,22 +4,30 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.util.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author higor
  */
-public class Validator implements Validatable {
+public class Validator {
+    
+    private static final String EMAIL_REGEX = 
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    @Override
-    public boolean isCpf(String cpf) {
+    public static boolean isCpf(final String cpf) {
         if (cpf.trim().isBlank() || (cpf.trim().length() != 14 && cpf.trim().length() != 11)) return false;
         
+        String cpfAlter = cpf;
         if (cpf.contains(".") || cpf.contains("-")) {
-            cpf = cpf.replace(".", "").replace("-", "");
+            cpfAlter = cpf.replace(".", "").replace("-", "");
         }
         
         
-        char[] arrCpf = cpf.toCharArray();
+        char[] arrCpf = cpfAlter.toCharArray();
         int primeiroDigito = 0;
         int j = 10;
         
@@ -47,9 +55,13 @@ public class Validator implements Validatable {
         return false;
     }
 
-    @Override
-    public boolean isEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public static boolean isEmail(final String email) {
+        
+        if (email == null) return false;
+        
+        Matcher matcher = PATTERN.matcher(email);
+        return matcher.matches();
+        
     }
     
 }

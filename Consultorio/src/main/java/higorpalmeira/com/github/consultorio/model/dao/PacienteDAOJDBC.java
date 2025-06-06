@@ -91,7 +91,7 @@ public class PacienteDAOJDBC implements PacienteDAO{
                  Paciente paciente = new Paciente();
                  paciente.setId( rset.getInt("id") );
                  paciente.setNome( rset.getString("nome") );
-                 paciente.setDataNascimento( rset.getDate("data_nascimento") );
+                 paciente.setDataNascimento( rset.getDate("data_nascimento").toLocalDate() );
                  paciente.setCpf( rset.getString("cpf") );
                  paciente.setTelefone( rset.getString("telefone") );
                  paciente.setEmail( rset.getString("email") );
@@ -121,7 +121,7 @@ public class PacienteDAOJDBC implements PacienteDAO{
             while(rset.next()) {
                 paciente.setId( rset.getInt("id") );
                 paciente.setNome( rset.getString("nome") );
-                paciente.setDataNascimento( rset.getDate("data_nascimento") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento").toLocalDate() );
                 paciente.setCpf( rset.getString("cpf") );
                 paciente.setTelefone( rset.getString("telefone") );
                 paciente.setEmail( rset.getString("email") );

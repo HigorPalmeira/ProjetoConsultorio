@@ -115,11 +115,7 @@ public class PacienteServiceImpl implements IPacienteService {
         
         if (id < 0) return null;
         
-        Paciente paciente = pacienteDAO.selectId(id);
-        
-        if (paciente.getId() == 0 && paciente.getNome() == null) return null;
-        
-        return paciente;
+        return pacienteDAO.selectId(id);
     }
     
     

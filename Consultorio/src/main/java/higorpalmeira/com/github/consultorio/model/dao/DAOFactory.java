@@ -16,4 +16,10 @@ public class DAOFactory {
         
     }
     
+    public static PacienteDAO criarPacienteDAO() {
+        
+        return new PacienteDAOJDBC();
+        
+    }
+    
 }

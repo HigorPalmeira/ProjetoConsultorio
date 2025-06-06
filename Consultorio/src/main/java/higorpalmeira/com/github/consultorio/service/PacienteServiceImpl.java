@@ -31,31 +31,26 @@ public class PacienteServiceImpl implements IPacienteService {
         
         // verificar nome
         if (nome == null || nome.trim().isBlank() || nome.trim().length() > 255) {
-            System.out.println("]:Nome inva'lido!");
             return false;
         }
         
         // verificar cpf
         if ( ! Validator.isCpf(cpf) ) {
-            System.out.println("]:CPF inva'lido!");
             return false;
         }
         
         // verificar data de nascimento
         if ( ! Validator.isDataNascimento(dataNascimento) ) {
-            System.out.println("]:Data de Nascimento inva'lida!");
             return false;
         }
         
         // verificar email
         if ( ! Validator.isEmail(email) ) {
-            System.out.println("]:Email inva'lido!");
             return false;
         }
         
         // verificar telefone
         if (telefone == null || telefone.isBlank() || telefone.length() > 20) {
-            System.out.println("]:Telefone inva'lido!");
             return false;
         }
         

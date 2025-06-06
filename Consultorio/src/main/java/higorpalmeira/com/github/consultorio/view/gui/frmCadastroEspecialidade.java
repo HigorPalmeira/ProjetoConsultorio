@@ -6,8 +6,6 @@ package main.java.higorpalmeira.com.github.consultorio.view.gui;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
-import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeService;
 
 /**
  *

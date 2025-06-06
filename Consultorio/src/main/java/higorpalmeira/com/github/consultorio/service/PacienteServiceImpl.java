@@ -112,7 +112,14 @@ public class PacienteServiceImpl implements IPacienteService {
 
     @Override
     public Paciente buscarPacientePorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (id < 0) return null;
+        
+        Paciente paciente = pacienteDAO.selectId(id);
+        
+        if (paciente.getId() == 0 && paciente.getNome() == null) return null;
+        
+        return paciente;
     }
     
     

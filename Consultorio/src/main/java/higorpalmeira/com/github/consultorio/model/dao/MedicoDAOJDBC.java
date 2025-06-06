@@ -86,7 +86,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
     @Override
     public List<Medico> selectAll() {
         ResultSet rset;
-        String select = "SELECT * FROM medico_especialidade ORDER BY id ASC";
+        String select = "SELECT * FROM medico_especialidade ORDER BY id_medico ASC";
         List<Medico> listaMedico = new ArrayList<>();
         try {
             rset = DAOGenerico.executarConsulta(select);

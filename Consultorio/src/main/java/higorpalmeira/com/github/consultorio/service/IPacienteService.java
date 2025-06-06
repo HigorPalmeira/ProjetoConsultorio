@@ -4,7 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 
@@ -14,9 +14,9 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
  */
 public interface IPacienteService {
     
-    boolean criarPaciente(String nome, String cpf, Date dataNascimento, String telefone, String email);
+    boolean criarPaciente(String nome, String cpf, LocalDate dataNascimento, String telefone, String email);
     
-    boolean atualizarPaciente(int id, String nome, String cpf, Date dataNascimento, String telefone, String email);
+    boolean atualizarPaciente(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, String email);
     
     boolean deletarPaciente(int id);
     

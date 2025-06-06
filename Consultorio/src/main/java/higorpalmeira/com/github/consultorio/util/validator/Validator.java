@@ -18,6 +18,9 @@ public class Validator {
             "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
+    
+    private static final LocalDate LIMITE_INFERIOR_DATA_NASCIMENTO = LocalDate.of(1900, 1, 1);
+    private static final long ANO_MINIMO = 5;
 
     public static boolean isCpf(final String cpf) {
         if (cpf.trim().isBlank() || (cpf.trim().length() != 14 && cpf.trim().length() != 11)) return false;
@@ -69,10 +72,9 @@ public class Validator {
         
         LocalDate hoje = LocalDate.now();
         
-        LocalDate limiteInferior = LocalDate.of(1900, 1, 1);
-        LocalDate limiteSuperior = hoje.minusYears(5);
+        LocalDate limiteSuperior = hoje.minusYears(ANO_MINIMO);
         
-        return dataNascimento.isAfter(limiteInferior) && dataNascimento.isBefore(limiteSuperior);
+        return dataNascimento.isAfter(LIMITE_INFERIOR_DATA_NASCIMENTO) && dataNascimento.isBefore(limiteSuperior);
         
     }
     

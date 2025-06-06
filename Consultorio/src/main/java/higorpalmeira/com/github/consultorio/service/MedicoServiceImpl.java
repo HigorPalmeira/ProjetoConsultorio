@@ -48,8 +48,7 @@ public class MedicoServiceImpl implements IMedicoService {
             return false;
         }
         
-        Especialidade especialidade = new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO())
-                                                                .buscarEspecialidadePorId(idEspecialidade);
+        Especialidade especialidade = new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO()).buscarEspecialidadePorId(idEspecialidade);
         
         if (especialidade == null || (especialidade.getId() == 0 && especialidade.getDescricao() == null)) {
             return false;

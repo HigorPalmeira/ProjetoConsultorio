@@ -104,7 +104,7 @@ public class PacienteServiceImpl implements IPacienteService {
         
         List<Paciente> listaPacientes = pacienteDAO.selectAll();
         
-        if (!listaPacientes.isEmpty()) return null;
+        if (listaPacientes.isEmpty()) return null;
         
         return listaPacientes;
         

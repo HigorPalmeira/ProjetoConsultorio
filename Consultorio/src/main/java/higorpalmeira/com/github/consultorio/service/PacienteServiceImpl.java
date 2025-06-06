@@ -87,7 +87,7 @@ public class PacienteServiceImpl implements IPacienteService {
         if ( ! Validator.isEmail(email) ) return false;
         
         // verificar telefone
-        if (telefone == null || telefone.trim().isBlank() || nome.trim().length() > 20) return false;
+        if (telefone == null || telefone.trim().isBlank() || telefone.trim().length() > 20) return false;
         
         Paciente paciente = new Paciente();
         paciente.setNome(nome);

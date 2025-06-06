@@ -146,5 +146,4 @@ public class MedicoServiceImpl implements IMedicoService {
         return medicoDAO.selectId(id);
     }
     
-    
 }

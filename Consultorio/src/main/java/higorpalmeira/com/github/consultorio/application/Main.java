@@ -5,11 +5,14 @@
 package main.java.higorpalmeira.com.github.consultorio.application;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
+import main.java.higorpalmeira.com.github.consultorio.controller.ConsultaController;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
 import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.service.ConsultaServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.MedicoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
@@ -24,16 +27,180 @@ public class Main {
     static PacienteController pacienteController;
     static EspecialidadeController especialidadeController;
     static MedicoController medicoController;
+    static ConsultaController consultaController;
     
     public static void main(String[] args) {
         
         pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
         especialidadeController = new EspecialidadeController(new EspecialidadeServiceImpl(DAOFactory.criarEspecialidadeDAO()));
         medicoController = new MedicoController(new MedicoServiceImpl(DAOFactory.criarMedicoDAO()));
+        consultaController = new ConsultaController(new ConsultaServiceImpl(DAOFactory.criarConsultaDAO()));
         
         menuEspecialidade();
         menuMedico();
         menuPaciente();
+        menuConsulta();
+    }
+    
+    private static void menuConsulta() {
+        boolean running = true;
+        
+        while(running) {
+            System.out.println("===\tMENU CONSULTA\t===");
+            System.out.println("[ 1 ] Criar Consulta \n[ 2 ] Atualizar Consulta \n[ 3 ] Excluir Consulta \n[ 4 ] Lista Consultas \n[ 9 ] Sair");
+            int opcao = scanner.nextInt();
+            
+            switch(opcao) {
+                case 1 -> criarConsulta();
+                    
+                case 2 -> atualizarConsulta();
+                    
+                case 3 -> excluirConsulta();
+                    
+                case 4 -> listarConsultas();
+                    
+                case 9 -> running = false;
+                    
+                default -> System.out.println("Opção inva'lida!");
+            }
+        }
+    }
+    
+    private static void criarConsulta() {
+        LocalDateTime dataHorario;
+        String observacoes, status;
+        int idMedico, idPaciente;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tCriar Consulta\t===");
+        
+        System.out.println("Informe a data da consulta: ");
+        System.out.println("- Dia: ");
+        int dia = scanner.nextInt();
+        System.out.println("- Mês: ");
+        int mes = scanner.nextInt();
+        System.out.println("- Ano: ");
+        int ano = scanner.nextInt();
+        
+        System.out.println("Informe o horário da consulta: ");
+        System.out.println("- Hora: ");
+        int hora = scanner.nextInt();
+        System.out.println("- Minutos: ");
+        int minuto = scanner.nextInt();
+        
+        dataHorario = LocalDateTime.of(ano, mes, dia, hora, minuto);
+        
+        System.out.println("Informe o status da consulta: ");
+        status = scanner.nextLine();
+        
+        System.out.println("Informe as observações: ");
+        observacoes = scanner.nextLine();
+        
+        do {
+            pacienteController.listarTodosPacientes();
+            System.out.println("Informe o ID do paciente que será consultado (se não encontrar digite -1): ");
+            idPaciente = scanner.nextInt();
+            
+            if (idPaciente == -1) {
+                criarPaciente();
+            }
+        } while(idPaciente == -1);
+        
+        do {
+            medicoController.listarTodosMedicos();
+            System.out.println("Informe o ID do médico que irá fazer a consulta (se não encontrar digite -1): ");
+            idMedico = scanner.nextInt();
+            
+            if (idMedico == -1) {
+                criarMedico();
+            }
+        } while(idMedico == -1);
+        
+        consultaController.criarConsulta(idMedico, idPaciente, dataHorario, observacoes, status);
+        
+    }
+    
+    private static void atualizarConsulta() {
+        LocalDateTime dataHorario;
+        String observacoes, status;
+        int id, idMedico, idPaciente;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tAtualizar Consulta\t===");
+        
+        System.out.println("Informe o ID da consulta: ");
+        id = scanner.nextInt();
+        
+        System.out.println("Informe a data da consulta: ");
+        System.out.println("- Dia: ");
+        int dia = scanner.nextInt();
+        System.out.println("- Mês: ");
+        int mes = scanner.nextInt();
+        System.out.println("- Ano: ");
+        int ano = scanner.nextInt();
+        
+        System.out.println("Informe o horário da consulta: ");
+        System.out.println("- Hora: ");
+        int hora = scanner.nextInt();
+        System.out.println("- Minutos: ");
+        int minuto = scanner.nextInt();
+        
+        dataHorario = LocalDateTime.of(ano, mes, dia, hora, minuto);
+        
+        System.out.println("Informe o status da consulta: ");
+        status = scanner.nextLine();
+        
+        System.out.println("Informe as observações: ");
+        observacoes = scanner.nextLine();
+        
+        do {
+            pacienteController.listarTodosPacientes();
+            System.out.println("Informe o ID do paciente que será consultado (se não encontrar digite -1): ");
+            idPaciente = scanner.nextInt();
+            
+            if (idPaciente == -1) {
+                criarPaciente();
+            }
+        } while(idPaciente == -1);
+        
+        do {
+            medicoController.listarTodosMedicos();
+            System.out.println("Informe o ID do médico que irá fazer a consulta (se não encontrar digite -1): ");
+            idMedico = scanner.nextInt();
+            
+            if (idMedico == -1) {
+                criarMedico();
+            }
+        } while(idMedico == -1);
+        
+        consultaController.atualizarConsulta(id, idMedico, idPaciente, dataHorario, observacoes, status);
+        
+    }
+    
+    private static void excluirConsulta() {
+        int id;
+        
+        System.out.println("Informe o ID da consulta a ser deletada: ");
+        id = scanner.nextInt();
+        
+        consultaController.deletarConsulta(id);
+        
+    }
+    
+    private static void listarConsultas() {
+        
+        System.out.println("Deseja listar (1) TODAS ou (2) ESPECÍFICA? ");
+        if (scanner.nextInt() == 1) {
+            consultaController.listarTodasConsultas();
+            
+        } else {
+            System.out.println("Informe o ID da consulta para se listada: ");
+            int id = scanner.nextInt();
+            consultaController.buscarConsultaPorId(id);
+        }
+        
     }
     
     private static void menuMedico() {

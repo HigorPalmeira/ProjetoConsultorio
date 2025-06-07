@@ -4,17 +4,23 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.util.validator;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Properties;
 
 /**
  *
  * @author higor
  */
 public class Validator {
+    
+    private static final String CONFIG_FILE = "/main/resources/config/config.properties";
     
     private static final String EMAIL_REGEX = 
             "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
@@ -117,6 +123,31 @@ public class Validator {
         
         return true;
         
+    }
+    
+    public static boolean isDataHoraConsulta(LocalDateTime dataHora) {
+        
+        int horarioInicio, horarioFim;
+        Properties props = new Properties();
+        
+        try(InputStream input = Validator.class.getResourceAsStream(CONFIG_FILE)) {
+            
+            if (input == null) {
+                System.err.println("Erro: Arquivo de configuração " + CONFIG_FILE + " não encontrado.");
+                return false;
+            }
+            
+            props.load(input);
+            
+            horarioInicio = Integer.parseInt( props.getProperty("config.horario-inicio") );
+            horarioFim = Integer.parseInt( props.getProperty("config.horario-final") );
+            
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo de configuração: " + e.getMessage());
+            return false;
+        }
+        
+        return !(dataHora.getHour() < horarioInicio || dataHora.getHour() > horarioFim);
     }
     
 }

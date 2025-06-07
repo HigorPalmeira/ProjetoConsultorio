@@ -4,7 +4,7 @@ O projeto faz parte dos critérios de avaliação da disciplina de `Programaçã
 <br>
 Ele possui requisitos avaliativos:
 
-* Deve possuir pelo menos 2 tabelas/classes no banco de dados e um relacionamento entre elas.
+* Deve possuir pelo menos 2 tabelas/classes no banco de dados com um relacionamento entre elas.
 
 * Primeiro, ele deve ser entregue o back-end como parte inicial do projeto.
 
@@ -12,7 +12,7 @@ Ele possui requisitos avaliativos:
 
 <br>
 
-O `ProjetoConsultorio` é idealizado como, um programa para gerenciar consultas de um consultório. Foram atribuídas as seguintes classes: `Pacientes`, `Médicos`, `Especialidades` e `Consultas`.
+O *`ProjetoConsultorio`* é idealizado como, um programa para gerenciar consultas de um consultório, ele é feito em **Java** e utilizando o banco de dados **MySQL**. Foram atribuídas as seguintes classes: `Pacientes`, `Médicos`, `Especialidades` e `Consultas`.
 
 <br>
 
@@ -38,4 +38,13 @@ O projeto possui um arquivo no [`main.resources`](Consultorio/src/main/resources
 
 <br>
 
-É necessário informar suas credenciais (usuário e senha) no arquivo [`DAOGenerico.java`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/model/dao) ou adicionar em um arquivo `database.properties`.
+É necessário adicionar suas credenciais (usuário e senha) do banco dados, diretamente no arquivo [`DAOGenerico.java`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/model/dao) ou criar um arquivo de propriedades no `main.resources.config`, com o nome `database.properties` nele adicione:
+
+```database.properties
+db.url=URL_DO_BANCO_DE_DADOS
+db.username=USUÁRIO
+db.password=SENHA_DO_USUÁRIO
+db.driver=DRIVER_DO_BANCO_DE_DADOS
+```
+
+> O driver utilizado nesse projeto foi o `com.mysql.cj.jdbc.Driver`.

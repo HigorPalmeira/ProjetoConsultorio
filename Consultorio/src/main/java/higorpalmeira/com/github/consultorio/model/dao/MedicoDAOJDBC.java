@@ -128,7 +128,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
         Especialidade especialidade = new Especialidade();
         
         try {
-            rset = DAOGenerico.executarConsulta(select);
+            rset = DAOGenerico.executarConsulta(select, id);
             while(rset.next()) {
                 medico.setId( rset.getInt("id_medico") );
                 medico.setNome( rset.getString("nome_medico") );

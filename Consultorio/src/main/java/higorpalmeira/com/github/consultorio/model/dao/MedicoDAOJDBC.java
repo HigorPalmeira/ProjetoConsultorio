@@ -121,7 +121,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
                 .append("SELECT * FROM medico_especialidade ")
-                .append("WHERE id = ?");
+                .append("WHERE id_medico = ?");
         String select = sqlBuilder.toString();
         
         Medico medico = new Medico();

@@ -88,6 +88,7 @@ public class Main {
         int hora = scanner.nextInt();
         System.out.println("- Minutos: ");
         int minuto = scanner.nextInt();
+        scanner.nextLine();
         
         dataHorario = LocalDateTime.of(ano, mes, dia, hora, minuto);
         
@@ -146,6 +147,7 @@ public class Main {
         int hora = scanner.nextInt();
         System.out.println("- Minutos: ");
         int minuto = scanner.nextInt();
+        scanner.nextLine();
         
         dataHorario = LocalDateTime.of(ano, mes, dia, hora, minuto);
         

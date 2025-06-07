@@ -28,4 +28,10 @@ public class DAOFactory {
         
     }
     
+    public static ConsultaDAO criarConsultaDAO() {
+        
+        return new ConsultaDAOJDBC();
+        
+    }
+    
 }

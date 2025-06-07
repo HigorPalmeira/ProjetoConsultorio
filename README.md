@@ -28,7 +28,7 @@ No programa, poderá ser feito o:
 
 <br>
 
-Foi adotado o padrão de design `Model-View-Controller (MVC)`, dividindo o projeto em três pacotes principais: `model`, `view` e o `controller`. Além, dos pacotes `util` e `service`.
+Foi adotado o padrão de design `Model-View-Controller (MVC)`, dividindo o projeto em três pacotes principais: [`model`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/model), [`view`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/view) e o [`controller`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/controller). Além, dos pacotes [`util`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/util) e [`service`](Consultorio/src/main/java/higorpalmeira/com/github/consultorio/service).
 
 <br>
 

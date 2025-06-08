@@ -370,12 +370,13 @@ public class Main {
         System.out.println("- Ano: ");
         int ano = scanner.nextInt();
         dataNascimento = LocalDate.of(ano, mes, dia);
+        scanner.nextLine();
         
         System.out.println("Informe o telefone do paciente: ");
         telefone = scanner.nextLine().trim();
         
         System.out.println("Informe o email do paciente: ");
-        email = scanner.nextLine();
+        email = scanner.nextLine().trim();
         
         pacienteController.criarPaciente(nome, cpf, dataNascimento, telefone, email);
         

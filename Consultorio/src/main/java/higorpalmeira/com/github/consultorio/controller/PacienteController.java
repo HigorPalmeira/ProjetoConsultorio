@@ -21,10 +21,11 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
     
-    public void criarPaciente(String nome, String cpf, LocalDate dataNascimento, 
-                                    String telefone, String email) {
+    public void criarPaciente(String nome, String cpf, LocalDate dataNascimento,
+                                    String sexo, String telefone, String email,
+                                    int idEndereco) {
         
-        if (pacienteService.criarPaciente(nome, cpf, dataNascimento, telefone, email)) {
+        if (pacienteService.criarPaciente(nome, cpf, dataNascimento, sexo, telefone, email, idEndereco)) {
             System.out.println("Paciente criado com sucesso!");
             
         } else {
@@ -33,11 +34,11 @@ public class PacienteController {
         
     }
     
-    public void atualizarPaciente(int id, String nome, String cpf, 
-                                    LocalDate dataNascimento, String telefone, 
-                                    String email) {
+    public void atualizarPaciente(int id, String nome, String cpf, LocalDate dataNascimento,
+                                    String sexo, String status, String telefone, String email,
+                                    int idEndereco) {
         
-        if (pacienteService.atualizarPaciente(id, nome, cpf, dataNascimento, telefone, email)) {
+        if (pacienteService.atualizarPaciente(id, nome, cpf, dataNascimento, sexo, status, telefone, email, idEndereco)) {
             System.out.println("Paciente atualizado com sucesso!");
             
         } else {

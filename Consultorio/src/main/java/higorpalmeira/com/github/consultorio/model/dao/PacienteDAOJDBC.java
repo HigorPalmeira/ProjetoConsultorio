@@ -91,7 +91,7 @@ public class PacienteDAOJDBC implements PacienteDAO {
     @Override
     public List<Paciente> selectAll() {
         ResultSet rset;
-        String select = "SELECT * FROM paciente_detalhado ORDER BY id ASC";
+        String select = "SELECT * FROM paciente_detalhado ORDER BY id_paciente ASC";
         List<Paciente> listaPacientes = new ArrayList<>();
         try {
 
@@ -132,8 +132,8 @@ public class PacienteDAOJDBC implements PacienteDAO {
         ResultSet rset;
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("SELECT * FROM paciente ")
-                .append("WHERE id = ?");
+                .append("SELECT * FROM paciente_detalhado ")
+                .append("WHERE id_paciente = ?");
         String select = sqlBuilder.toString();
         Paciente paciente = new Paciente();
         try {

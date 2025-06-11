@@ -17,6 +17,7 @@ public class Paciente {
     private LocalDate dataNascimento;
     private String telefone;
     private String email;
+    private Endereco endereco;
 
     public int getId() {
         return id;
@@ -66,9 +67,17 @@ public class Paciente {
         this.email = email;
     }
 
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     @Override
     public String toString() {
-        return "Paciente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", telefone=" + telefone + ", email=" + email + '}';
+        return "Paciente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + '}';
     }
     
 }

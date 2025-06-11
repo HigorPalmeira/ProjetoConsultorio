@@ -76,6 +76,9 @@ public class EnderecoController {
         
         if (endereco == null || (endereco.getId() == 0 && endereco.getCep() == null)) {
             System.out.println("Endereço não pode ser encontrado no sistema!");
+            
+        } else {
+            System.out.println(endereco.toString());
         }
         
     }

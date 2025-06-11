@@ -7,32 +7,36 @@ package main.java.higorpalmeira.com.github.consultorio.model.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 
 /**
  *
  * @author higor
  */
-public class PacienteDAOJDBC implements PacienteDAO{
+public class PacienteDAOJDBC implements PacienteDAO {
 
     @Override
     public int insert(Paciente paciente) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("INSERT INTO paciente (nome, cpf, data_nascimento, telefone, email) ")
-                .append("VALUES (?, ?, ?, ?, ?)");
+                .append("INSERT INTO paciente (nome, cpf, data_nascimento, sexo, status, telefone, email, id_endereco) ")
+                .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         String insert = sqlBuilder.toString();
         int line = 0;
         try {
             line = DAOGenerico.executarComando(insert, paciente.getNome(),
-                                                        paciente.getCpf(),
-                                                        paciente.getDataNascimento(),
-                                                        paciente.getTelefone(),
-                                                        paciente.getEmail());
-        } catch(Exception e) {
+                    paciente.getCpf(),
+                    paciente.getDataNascimento(),
+                    paciente.getSexo(),
+                    paciente.getStatus(),
+                    paciente.getTelefone(),
+                    paciente.getEmail(),
+                    paciente.getEndereco().getId());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return line;
     }
 
@@ -44,25 +48,31 @@ public class PacienteDAOJDBC implements PacienteDAO{
                 .append("nome = ?, ")
                 .append("cpf = ?, ")
                 .append("data_nascimento = ?, ")
+                .append("sexo = ?, ")
+                .append("status = ?, ")
                 .append("telefone = ?, ")
                 .append("email = ?, ")
+                .append("id_endereco = ? ")
                 .append("WHERE id = ?");
         String update = sqlBuilder.toString();
-        
+
         int line = 0;
         try {
-            
+
             line = DAOGenerico.executarComando(update, paciente.getNome(),
-                                                        paciente.getCpf(),
-                                                        paciente.getDataNascimento(),
-                                                        paciente.getTelefone(),
-                                                        paciente.getEmail(),
-                                                        paciente.getId());
-            
-        } catch(Exception e) {
+                    paciente.getCpf(),
+                    paciente.getDataNascimento(),
+                    paciente.getSexo(),
+                    paciente.getStatus(),
+                    paciente.getTelefone(),
+                    paciente.getEmail(),
+                    paciente.getEndereco().getId(),
+                    paciente.getId());
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return line;
     }
 
@@ -73,7 +83,7 @@ public class PacienteDAOJDBC implements PacienteDAO{
                 .append("DELETE FROM paciente ")
                 .append("WHERE id = ?");
         String delete = sqlBuilder.toString();
-        
+
         int line = 0;
         line = DAOGenerico.executarComando(delete, id);
         return line;
@@ -81,29 +91,41 @@ public class PacienteDAOJDBC implements PacienteDAO{
 
     @Override
     public List<Paciente> selectAll() {
-         ResultSet rset;
-         String select = "SELECT * FROM paciente ORDER BY id ASC";
-         List<Paciente> listaPacientes = new ArrayList<>();
-         try {
-             
-             rset = DAOGenerico.executarConsulta(select);
-             while(rset.next()) {
-                 Paciente paciente = new Paciente();
-                 paciente.setId( rset.getInt("id") );
-                 paciente.setNome( rset.getString("nome") );
-                 paciente.setDataNascimento( rset.getDate("data_nascimento").toLocalDate() );
-                 paciente.setCpf( rset.getString("cpf") );
-                 paciente.setTelefone( rset.getString("telefone") );
-                 paciente.setEmail( rset.getString("email") );
-                 
-                 listaPacientes.add(paciente);
-             }
-             
-         } catch(Exception e) {
-             e.printStackTrace();
-         }
-         
-         return listaPacientes;
+        ResultSet rset;
+        String select = "SELECT * FROM paciente_detalhado ORDER BY id ASC";
+        List<Paciente> listaPacientes = new ArrayList<>();
+        try {
+
+            rset = DAOGenerico.executarConsulta(select);
+            while (rset.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo(rset.getString("sexo_paciente"));
+                paciente.setStatus(rset.getString("status_paciente"));
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
+
+                listaPacientes.add(paciente);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaPacientes;
     }
 
     @Override
@@ -116,22 +138,33 @@ public class PacienteDAOJDBC implements PacienteDAO{
         String select = sqlBuilder.toString();
         Paciente paciente = new Paciente();
         try {
-            
+
             rset = DAOGenerico.executarConsulta(select, id);
-            while(rset.next()) {
-                paciente.setId( rset.getInt("id") );
-                paciente.setNome( rset.getString("nome") );
-                paciente.setDataNascimento( rset.getDate("data_nascimento").toLocalDate() );
-                paciente.setCpf( rset.getString("cpf") );
-                paciente.setTelefone( rset.getString("telefone") );
-                paciente.setEmail( rset.getString("email") );
+            while (rset.next()) {
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo(rset.getString("sexo_paciente"));
+                paciente.setStatus(rset.getString("status_paciente"));
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
             }
-            
-        } catch(Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return paciente;
     }
-    
+
 }

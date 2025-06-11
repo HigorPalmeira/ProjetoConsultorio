@@ -20,16 +20,15 @@ public class PacienteDAOJDBC implements PacienteDAO {
     public int insert(Paciente paciente) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("INSERT INTO paciente (nome, cpf, data_nascimento, sexo, status, telefone, email, id_endereco) ")
-                .append("VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                .append("INSERT INTO paciente (nome, cpf, data_nascimento, sexo, telefone, email, id_endereco) ")
+                .append("VALUES (?, ?, ?, ?, ?, ?, ?)");
         String insert = sqlBuilder.toString();
         int line = 0;
         try {
             line = DAOGenerico.executarComando(insert, paciente.getNome(),
                     paciente.getCpf(),
-                    paciente.getDataNascimento(),
+                    Date.valueOf( paciente.getDataNascimento() ),
                     paciente.getSexo(),
-                    paciente.getStatus(),
                     paciente.getTelefone(),
                     paciente.getEmail(),
                     paciente.getEndereco().getId());
@@ -61,7 +60,7 @@ public class PacienteDAOJDBC implements PacienteDAO {
 
             line = DAOGenerico.executarComando(update, paciente.getNome(),
                     paciente.getCpf(),
-                    paciente.getDataNascimento(),
+                    Date.valueOf( paciente.getDataNascimento() ),
                     paciente.getSexo(),
                     paciente.getStatus(),
                     paciente.getTelefone(),

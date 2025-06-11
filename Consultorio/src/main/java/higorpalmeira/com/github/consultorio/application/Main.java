@@ -468,8 +468,9 @@ public class Main {
     }
     
     private static void criarPaciente() {
-        String nome, cpf, telefone, email;
+        String nome, cpf, telefone, email, sexo;
         LocalDate dataNascimento;
+        int idEndereco;
         
         scanner.nextLine();
         
@@ -480,6 +481,9 @@ public class Main {
         
         System.out.println("Informe o CPF do paciente (###.###.###-##): ");
         cpf = scanner.nextLine();
+        
+        System.out.println("Informe o sexo do paciente: ");
+        sexo = scanner.nextLine().trim().toLowerCase();
         
         System.out.println("Informe a data de nascimento do paciente: ");
         System.out.println("- Dia: ");
@@ -497,14 +501,26 @@ public class Main {
         System.out.println("Informe o email do paciente: ");
         email = scanner.nextLine().trim();
         
-        pacienteController.criarPaciente(nome, cpf, dataNascimento, telefone, email);
+        System.out.println("---\tEndereço do Paciente\t---");
+        
+        do {
+            enderecoController.listarTodosEnderecos();
+            System.out.println("Informe o id do endereco do paciente (se não encontrar digite -1): ");
+            idEndereco = scanner.nextInt();
+
+            if (idEndereco == -1) {
+                criarEndereco();
+            }
+        } while(idEndereco == -1);
+        
+        pacienteController.criarPaciente(nome, cpf, dataNascimento, sexo, telefone, email, idEndereco);
         
     }
     
     private static void atualizarPaciente() {
-        String nome, cpf, telefone, email;
+        String nome, cpf, telefone, email, sexo, status;
         LocalDate dataNascimento;
-        int id;
+        int id, idEndereco;
         
         System.out.println("===\tAtualizar Paciente\t===");
         
@@ -517,6 +533,12 @@ public class Main {
         
         System.out.println("Informe o CPF do paciente (###.###.###-##): ");
         cpf = scanner.nextLine();
+        
+        System.out.println("Informe o sexo do paciente: ");
+        sexo = scanner.nextLine().trim().toLowerCase();
+        
+        System.out.println("Informe o status do paciente: ");
+        status = scanner.nextLine().trim().toLowerCase();
         
         System.out.println("Informe a data de nascimento do paciente: ");
         System.out.println("- Dia: ");
@@ -533,7 +555,17 @@ public class Main {
         System.out.println("Informe o email do paciente: ");
         email = scanner.nextLine();
         
-        pacienteController.atualizarPaciente(id, nome, cpf, dataNascimento, telefone, email);
+        do {
+            enderecoController.listarTodosEnderecos();
+            System.out.println("Informe o id do endereco do paciente (se não encontrar digite -1): ");
+            idEndereco = scanner.nextInt();
+
+            if (idEndereco == -1) {
+                criarEndereco();
+            }
+        } while(idEndereco == -1);
+        
+        pacienteController.atualizarPaciente(id, nome, cpf, dataNascimento, sexo, status, telefone, email, idEndereco);
         
     }
     

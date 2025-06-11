@@ -8,11 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import main.java.higorpalmeira.com.github.consultorio.controller.ConsultaController;
+import main.java.higorpalmeira.com.github.consultorio.controller.EnderecoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
 import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.service.ConsultaServiceImpl;
+import main.java.higorpalmeira.com.github.consultorio.service.EnderecoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.MedicoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.PacienteServiceImpl;
@@ -29,6 +31,8 @@ public class Main {
     static MedicoController medicoController;
     static ConsultaController consultaController;
     
+    static EnderecoController enderecoController;
+    
     public static void main(String[] args) {
         
         pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
@@ -36,10 +40,69 @@ public class Main {
         medicoController = new MedicoController(new MedicoServiceImpl(DAOFactory.criarMedicoDAO()));
         consultaController = new ConsultaController(new ConsultaServiceImpl(DAOFactory.criarConsultaDAO()));
         
+        enderecoController = new EnderecoController(new EnderecoServiceImpl(DAOFactory.criarEnderecoDAO()));
+        
+        
+        
+        /*
         menuEspecialidade();
         menuMedico();
         menuPaciente();
         menuConsulta();
+        */
+    }
+    
+    private static void menuEndereco() {
+        boolean running = true;
+        
+        while(running) {
+            System.out.println("===\tMENU ENDEREÇO\t===");
+            System.out.println("[ 1 ] Criar Endereço \n[ 2 ] Atualizar Endereço \n[ 3 ] Excluir Endereço \n[ 4 ] Lista Endereços \n[ 9 ] Sair");
+            int opcao = scanner.nextInt();
+            
+            switch(opcao) {
+                case 1 -> criarEndereco();
+                    
+                case 2 -> atualizarEndereco();
+                    
+                case 3 -> excluirEndereco();
+                    
+                case 4 -> listarEndereco();
+                    
+                case 9 -> running = false;
+                    
+                default -> System.out.println("Opção inva'lida!");
+            }
+        }
+    }
+    
+    private static void criarEndereco() {
+        String rua, numero, bairro, cidade, estado, cep;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tCriar Endereço\t===");
+        
+        System.out.println("Informe o número do CEP: ");
+        cep = scanner.nextLine().trim();
+        
+        System.out.println("Informe a rua: ");
+        rua = scanner.nextLine().trim();
+        
+        System.out.println("Informe o número: ");
+        numero = scanner.nextLine().trim();
+        
+        System.out.println("Informe o bairro: ");
+        bairro = scanner.nextLine().trim();
+        
+        System.out.println("Informe a cidade: ");
+        cidade = scanner.nextLine().trim();
+        
+        System.out.println("Informe o estado: ");
+        estado = scanner.nextLine();
+        
+        enderecoController.criarEndereco(rua, numero, bairro, cidade, estado, cep);
+        
     }
     
     private static void menuConsulta() {

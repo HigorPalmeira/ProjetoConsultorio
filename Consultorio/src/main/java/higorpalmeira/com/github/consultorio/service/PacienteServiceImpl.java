@@ -6,10 +6,13 @@ package main.java.higorpalmeira.com.github.consultorio.service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
+import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
@@ -19,6 +22,11 @@ import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
  */
 public class PacienteServiceImpl implements IPacienteService {
     
+    private final String STATUS_DEFAULT = "ativo";
+    private final List<String> SEXO = Arrays.asList(
+            "masculino", "feminino"
+    );
+    
     private final PacienteDAO pacienteDAO;
     
     public PacienteServiceImpl(PacienteDAO pacienteDAO) {
@@ -26,8 +34,7 @@ public class PacienteServiceImpl implements IPacienteService {
     }
 
     @Override
-    public boolean criarPaciente(String nome, String cpf, LocalDate dataNascimento, 
-                                    String telefone, String email) {
+    public boolean criarPaciente(String nome, String cpf, LocalDate dataNascimento, String sexo, String telefone, String email, int idEndereco) {
         
         // verificar nome
         if (nome == null || nome.trim().isBlank() || nome.trim().length() > 255) {
@@ -37,6 +44,11 @@ public class PacienteServiceImpl implements IPacienteService {
         // verificar cpf
         if ( ! Validator.isCpf(cpf) ) {
             return false;
+        }
+        
+        // verificar sexo
+        if ( ! SEXO.contains(sexo.toLowerCase()) ) {
+            sexo = "não definido";
         }
         
         // verificar data de nascimento
@@ -58,16 +70,19 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setNome(nome);
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
+        paciente.setSexo(sexo);
+        paciente.setStatus( STATUS_DEFAULT );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
+        
+        Endereco endereco = new EnderecoServiceImpl( DAOFactory.criarEnderecoDAO() ).buscarEnderecoPorId(idEndereco);
+        paciente.setEndereco(endereco);
         
         return pacienteDAO.insert(paciente) > 0;
     }
 
     @Override
-    public boolean atualizarPaciente(int id, String nome, String cpf, 
-                                    LocalDate dataNascimento, String telefone, 
-                                    String email) {
+    public boolean atualizarPaciente(int id, String nome, String cpf, LocalDate dataNascimento, String sexo, String status, String telefone, String email, int idEndereco) {
         
         // verificar nome
         if (nome == null || nome.trim().isBlank() || nome.trim().length() > 255) return false;
@@ -77,6 +92,11 @@ public class PacienteServiceImpl implements IPacienteService {
         
         // verificar data de nascimento
         if ( ! Validator.isDataNascimento(dataNascimento) ) return false;
+        
+        // verificar sexo
+        if ( ! SEXO.contains(sexo.toLowerCase()) ) {
+            sexo = "não definido";
+        }
         
         // verificar email
         if ( ! Validator.isEmail(email) ) return false;
@@ -88,8 +108,13 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setNome(nome);
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
+        paciente.setSexo(sexo);
+        paciente.setStatus(status);
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
+        
+        Endereco endereco = new EnderecoServiceImpl( DAOFactory.criarEnderecoDAO() ).buscarEnderecoPorId(idEndereco);
+        paciente.setEndereco(endereco);
         
         return pacienteDAO.update(paciente) > 0;
     }

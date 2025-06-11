@@ -34,4 +34,10 @@ public class DAOFactory {
         
     }
     
+    public static EnderecoDAO criarEnderecoDAO() {
+        
+        return new EnderecoDAOJDBC();
+        
+    }
+    
 }

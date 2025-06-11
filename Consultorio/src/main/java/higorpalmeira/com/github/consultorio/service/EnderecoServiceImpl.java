@@ -4,7 +4,11 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.service;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import main.java.higorpalmeira.com.github.consultorio.model.dao.EnderecoDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 
 /**
@@ -12,30 +16,73 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
  * @author higor
  */
 public class EnderecoServiceImpl implements IEnderecoService {
+    
+    private final EnderecoDAO enderecoDAO;
+    
+    public EnderecoServiceImpl(EnderecoDAO enderecoDAO) {
+        this.enderecoDAO = enderecoDAO;
+    }
 
     @Override
     public boolean criarEndereco(String rua, String numero, String bairro, String cidade, String estado, String cep) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (rua.isBlank() || bairro.isBlank() || cidade.isBlank() || estado.isBlank() || cep.isBlank()) {
+            return false;
+        }
+        
+        Endereco endereco = new Endereco(rua, numero, bairro, cidade, estado, cep);
+        
+        return enderecoDAO.insert(endereco) > 0;
+        
     }
 
     @Override
     public boolean atualizarEndereco(int id, String rua, String numero, String bairro, String cidade, String estado, String cep) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (id < 0 || rua.isBlank() || bairro.isBlank() || cidade.isBlank() || estado.isBlank() || cep.isBlank()) {
+            return false;
+        }
+        
+        Endereco endereco = new Endereco(rua, numero, bairro, cidade, estado, cep);
+        endereco.setId(id);
+        
+        return enderecoDAO.update(endereco) > 0;
+        
     }
 
     @Override
     public boolean deletarEndereco(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (id < 0) return false;
+        
+        boolean deletado = false;
+        
+        try {
+            deletado = enderecoDAO.delete(id) > 0;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(EnderecoServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return deletado;
+        
     }
 
     @Override
     public List<Endereco> listarTodosEnderecos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        List<Endereco> listaEnderecos = enderecoDAO.selectAll();
+        
+        return listaEnderecos;
+        
     }
 
     @Override
     public Endereco buscarEnderecoPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (id < 0) return null;
+        
+        return enderecoDAO.selectById(id);
+        
     }
     
 }

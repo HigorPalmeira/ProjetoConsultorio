@@ -69,8 +69,6 @@ public class EspecialidadeServiceImpl implements IEspecialidadeService {
         
         List<Especialidade> listaEspecialidades = especialidadeDAO.selectAll();
         
-        if (listaEspecialidades.isEmpty()) return null;
-        
         return listaEspecialidades;
     }
 

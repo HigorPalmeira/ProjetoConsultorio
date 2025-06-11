@@ -15,6 +15,8 @@ public class Paciente {
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
+    private String sexo;
+    private String status; 
     private String telefone;
     private String email;
     private Endereco endereco;
@@ -75,9 +77,25 @@ public class Paciente {
         this.endereco = endereco;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Paciente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + '}';
+        return "Paciente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", sexo=" + sexo + ", status=" + status + ", telefone=" + telefone + ", email=" + email + ", endereco=" + endereco + '}';
     }
     
 }

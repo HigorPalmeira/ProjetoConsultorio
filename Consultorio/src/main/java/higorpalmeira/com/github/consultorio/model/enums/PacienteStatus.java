@@ -30,7 +30,7 @@ public enum PacienteStatus {
             }
         }
         
-        throw new IllegarArgumentException("Status do paciente inválido: " + descricao);
+        throw new IllegalArgumentException("Status do paciente inválido: " + descricao);
     }
     
 }

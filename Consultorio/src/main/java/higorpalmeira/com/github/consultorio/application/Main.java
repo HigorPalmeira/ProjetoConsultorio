@@ -43,13 +43,12 @@ public class Main {
         enderecoController = new EnderecoController(new EnderecoServiceImpl(DAOFactory.criarEnderecoDAO()));
         
         
-        
-        /*
+        menuEndereco();
         menuEspecialidade();
         menuMedico();
         menuPaciente();
         menuConsulta();
-        */
+        
     }
     
     private static void menuEndereco() {
@@ -103,6 +102,63 @@ public class Main {
         
         enderecoController.criarEndereco(rua, numero, bairro, cidade, estado, cep);
         
+    }
+    
+    private static void atualizarEndereco() {
+        int id;
+        String rua, numero, bairro, cidade, estado, cep;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tCriar Endereço\t===");
+        
+        System.out.println("Informe o ID: ");
+        id = scanner.nextInt();
+        scanner.nextLine();
+        
+        System.out.println("Informe o número do CEP: ");
+        cep = scanner.nextLine().trim();
+        
+        System.out.println("Informe a rua: ");
+        rua = scanner.nextLine().trim();
+        
+        System.out.println("Informe o número: ");
+        numero = scanner.nextLine().trim();
+        
+        System.out.println("Informe o bairro: ");
+        bairro = scanner.nextLine().trim();
+        
+        System.out.println("Informe a cidade: ");
+        cidade = scanner.nextLine().trim();
+        
+        System.out.println("Informe o estado: ");
+        estado = scanner.nextLine();
+        
+        enderecoController.atualizarEndereco(id, rua, numero, bairro, cidade, estado, cep);
+        
+    }
+    
+    private static void excluirEndereco() {
+        int id;
+        
+        System.out.println("Informe o ID do endereço a ser deletado: ");
+        id = scanner.nextInt();
+        
+        enderecoController.deletarEndereco(id);
+        
+    }
+    
+    private static void listarEndereco() {
+        System.out.println("Deseja listar (1) TODOS ou (2) ESPECÍFICO? ");
+        if (scanner.nextInt() == 1) {
+            enderecoController.listarTodosEnderecos();
+            
+        } else {
+            System.out.println("Informe o ID do endereço para ser listado: ");
+            int id = scanner.nextInt();
+            enderecoController.buscarEnderecoPorId(id);
+            
+        }
     }
     
     private static void menuConsulta() {
@@ -261,7 +317,7 @@ public class Main {
             consultaController.listarTodasConsultas();
             
         } else {
-            System.out.println("Informe o ID da consulta para se listada: ");
+            System.out.println("Informe o ID da consulta para ser listada: ");
             int id = scanner.nextInt();
             consultaController.buscarConsultaPorId(id);
         }

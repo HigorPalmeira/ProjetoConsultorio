@@ -4,6 +4,8 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.model.entity;
 
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
+
 /**
  *
  * @author higor
@@ -13,6 +15,7 @@ public class Medico {
     private String nome;
     private String crm;
     private Especialidade especialidade;
+    private Status status;
     private String telefone;
     private String email;
 
@@ -64,9 +67,17 @@ public class Medico {
         this.email = email;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Medico{" + "id=" + id + ", nome=" + nome + ", crm=" + crm + ", especialidade=" + especialidade + ", telefone=" + telefone + ", email=" + email + '}';
+        return "Medico{" + "id=" + id + ", nome=" + nome + ", crm=" + crm + ", especialidade=" + especialidade + ", status=" + status + ", telefone=" + telefone + ", email=" + email + '}';
     }
     
 }

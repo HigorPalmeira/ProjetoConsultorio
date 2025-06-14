@@ -10,7 +10,7 @@ import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
-import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteStatus;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 
 /**
  *
@@ -107,7 +107,7 @@ public class PacienteDAOJDBC implements PacienteDAO {
                 paciente.setTelefone(rset.getString("telefone_paciente"));
                 paciente.setEmail(rset.getString("email_paciente"));
                 paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
-                paciente.setStatus( PacienteStatus.fromDescricao( rset.getString("status_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
 
                 Endereco endereco = new Endereco(rset.getString("rua_endereco"),
                         rset.getString("numero_endereco"),
@@ -149,7 +149,7 @@ public class PacienteDAOJDBC implements PacienteDAO {
                 paciente.setTelefone(rset.getString("telefone_paciente"));
                 paciente.setEmail(rset.getString("email_paciente"));
                 paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
-                paciente.setStatus( PacienteStatus.fromDescricao( rset.getString("status_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
 
                 Endereco endereco = new Endereco(rset.getString("rua_endereco"),
                         rset.getString("numero_endereco"),

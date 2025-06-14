@@ -15,7 +15,7 @@ import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
-import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteStatus;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
@@ -70,7 +70,7 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
         paciente.setSexo(enumSexo);
-        paciente.setStatus( PacienteStatus.fromDescricao( STATUS_DEFAULT ) );
+        paciente.setStatus(Status.fromDescricao( STATUS_DEFAULT ) );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
         
@@ -105,7 +105,7 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
         paciente.setSexo(enumSexo);
-        paciente.setStatus( PacienteStatus.fromDescricao( STATUS_DEFAULT ) );
+        paciente.setStatus(Status.fromDescricao( STATUS_DEFAULT ) );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
         

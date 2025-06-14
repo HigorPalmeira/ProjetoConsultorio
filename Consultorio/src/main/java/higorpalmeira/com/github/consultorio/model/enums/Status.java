@@ -8,14 +8,14 @@ package main.java.higorpalmeira.com.github.consultorio.model.enums;
  *
  * @author higor
  */
-public enum PacienteStatus {
+public enum Status {
     
     ATIVO("ATIVO"),
     INATIVO("INATIVO");
     
     private final String descricao;
     
-    PacienteStatus(String descricao) {
+    Status(String descricao) {
         this.descricao = descricao;
     }
     
@@ -23,8 +23,8 @@ public enum PacienteStatus {
         return this.descricao;
     }
     
-    public static PacienteStatus fromDescricao(String descricao) {
-        for (PacienteStatus status : PacienteStatus.values()) {
+    public static Status fromDescricao(String descricao) {
+        for (Status status : Status.values()) {
             if (status.descricao.equalsIgnoreCase(descricao)) {
                 return status;
             }

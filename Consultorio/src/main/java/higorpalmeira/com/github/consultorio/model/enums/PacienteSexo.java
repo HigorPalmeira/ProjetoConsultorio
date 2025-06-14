@@ -12,7 +12,7 @@ public enum PacienteSexo {
     
     FEMININO("FEMININO"),
     MASCULINO("MASCULINO"),
-    NAODEFINIDO("NÃO DEFINISO");
+    NAODEFINIDO("NÃO DEFINIDO");
     
     private final String descricao;
     

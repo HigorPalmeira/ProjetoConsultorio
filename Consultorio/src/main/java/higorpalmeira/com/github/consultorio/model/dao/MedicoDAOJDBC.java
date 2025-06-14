@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Especialidade;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 
 /**
  *
@@ -48,6 +49,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 .append("nome = ?, ")
                 .append("crm = ?, ")
                 .append("id_especialidade = ?, ")
+                .append("status = ?, ")
                 .append("telefone = ?, ")
                 .append("email = ?, ")
                 .append("WHERE id = ?");
@@ -59,6 +61,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
             line = DAOGenerico.executarComando(update, medico.getNome(),
                                                         medico.getCrm(),
                                                         medico.getEspecialidade().getId(),
+                                                        medico.getStatus().getDescricao(),
                                                         medico.getTelefone(),
                                                         medico.getEmail(),
                                                         medico.getId());
@@ -95,6 +98,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 medico.setId( rset.getInt("id_medico") );
                 medico.setNome( rset.getString("nome_medico") );
                 medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus( Status.fromDescricao( rset.getString("status_medico") ) );
                 
                 Especialidade especialidade = new Especialidade();
                 especialidade.setId( rset.getInt("id_especialidade") );
@@ -133,6 +137,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 medico.setId( rset.getInt("id_medico") );
                 medico.setNome( rset.getString("nome_medico") );
                 medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus( Status.fromDescricao( rset.getString("status_medico") ) );
 
                 especialidade.setId( rset.getInt("id_especialidade") );
                 especialidade.setDescricao( rset.getString("descricao_especialidade") );

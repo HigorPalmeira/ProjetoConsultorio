@@ -31,9 +31,9 @@ public class MedicoController {
         
     }
     
-    public void atualizarMedico(int id, String nome, String crm, int idEspecialidade, String telefone, String email) {
+    public void atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email) {
         
-        if (this.medicoService.atualizarMedico(id, nome, crm, idEspecialidade, telefone, email)) {
+        if (this.medicoService.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email)) {
             System.out.println("Médico atualizado com sucesso!");
             
         } else {

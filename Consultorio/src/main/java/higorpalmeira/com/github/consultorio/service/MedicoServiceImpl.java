@@ -12,6 +12,7 @@ import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.MedicoDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Especialidade;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
@@ -66,7 +67,7 @@ public class MedicoServiceImpl implements IMedicoService {
     }
 
     @Override
-    public boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String telefone, String email) {
+    public boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email) {
         
         if (id < 0) {
             return false;
@@ -98,6 +99,8 @@ public class MedicoServiceImpl implements IMedicoService {
             return false;
         }
         
+        Status enumStatus = Status.fromDescricao(status.trim().toUpperCase());
+        
         Medico medico = new Medico();
         medico.setId(id);
         medico.setNome(nome);
@@ -105,6 +108,7 @@ public class MedicoServiceImpl implements IMedicoService {
         medico.setEspecialidade(especialidade);
         medico.setTelefone(telefone);
         medico.setEmail(email);
+        medico.setStatus(enumStatus);
         
         return medicoDAO.update(medico) > 0;
         

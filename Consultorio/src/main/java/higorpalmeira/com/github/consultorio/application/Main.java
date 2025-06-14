@@ -382,7 +382,7 @@ public class Main {
     }
     
     private static void atualizarMedico() {
-        String nome, crm, telefone, email;
+        String nome, crm, status, telefone, email;
         int id, idEspecialidade;
         
         System.out.println("===\tAtualizar Médico\t===");
@@ -396,6 +396,9 @@ public class Main {
         
         System.out.println("Informe o CRM do médico: ");
         crm = scanner.nextLine();
+        
+        System.out.println("Informe o status do médico: ");
+        status = scanner.nextLine();
         
         System.out.println("Informe o telefone do médico: ");
         telefone = scanner.nextLine();
@@ -413,7 +416,7 @@ public class Main {
             }
         } while(idEspecialidade == -1);
         
-        medicoController.atualizarMedico(id, nome, crm, idEspecialidade, telefone, email);
+        medicoController.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email);
         
     }
     

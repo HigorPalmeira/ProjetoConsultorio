@@ -15,7 +15,7 @@ public interface IMedicoService {
     
     boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email);
     
-    boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String telefone, String email);
+    boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email);
     
     boolean deletarMedico(int id);
     

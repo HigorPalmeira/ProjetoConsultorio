@@ -5,6 +5,8 @@
 package main.java.higorpalmeira.com.github.consultorio.model.entity;
 
 import java.time.LocalDate;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteStatus;
 
 /**
  *
@@ -15,8 +17,10 @@ public class Paciente {
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
-    private String sexo;
-    private String status; 
+    //private String sexo;
+    //private String status; 
+    private PacienteSexo sexo;
+    private PacienteStatus status;
     private String telefone;
     private String email;
     private Endereco endereco;
@@ -77,19 +81,19 @@ public class Paciente {
         this.endereco = endereco;
     }
 
-    public String getSexo() {
+    public PacienteSexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(PacienteSexo sexo) {
         this.sexo = sexo;
     }
 
-    public String getStatus() {
+    public PacienteStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PacienteStatus status) {
         this.status = status;
     }
 

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteStatus;
 
 /**
  *
@@ -28,7 +30,7 @@ public class PacienteDAOJDBC implements PacienteDAO {
             line = DAOGenerico.executarComando(insert, paciente.getNome(),
                     paciente.getCpf(),
                     Date.valueOf( paciente.getDataNascimento() ),
-                    paciente.getSexo(),
+                    paciente.getSexo().getDescricao(),
                     paciente.getTelefone(),
                     paciente.getEmail(),
                     paciente.getEndereco().getId());
@@ -61,8 +63,8 @@ public class PacienteDAOJDBC implements PacienteDAO {
             line = DAOGenerico.executarComando(update, paciente.getNome(),
                     paciente.getCpf(),
                     Date.valueOf( paciente.getDataNascimento() ),
-                    paciente.getSexo(),
-                    paciente.getStatus(),
+                    paciente.getSexo().getDescricao(),
+                    paciente.getStatus().getDescricao(),
                     paciente.getTelefone(),
                     paciente.getEmail(),
                     paciente.getEndereco().getId(),
@@ -104,8 +106,8 @@ public class PacienteDAOJDBC implements PacienteDAO {
                 paciente.setCpf(rset.getString("cpf_paciente"));
                 paciente.setTelefone(rset.getString("telefone_paciente"));
                 paciente.setEmail(rset.getString("email_paciente"));
-                paciente.setSexo(rset.getString("sexo_paciente"));
-                paciente.setStatus(rset.getString("status_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus( PacienteStatus.fromDescricao( rset.getString("status_paciente") ) );
 
                 Endereco endereco = new Endereco(rset.getString("rua_endereco"),
                         rset.getString("numero_endereco"),
@@ -146,8 +148,8 @@ public class PacienteDAOJDBC implements PacienteDAO {
                 paciente.setCpf(rset.getString("cpf_paciente"));
                 paciente.setTelefone(rset.getString("telefone_paciente"));
                 paciente.setEmail(rset.getString("email_paciente"));
-                paciente.setSexo(rset.getString("sexo_paciente"));
-                paciente.setStatus(rset.getString("status_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus( PacienteStatus.fromDescricao( rset.getString("status_paciente") ) );
 
                 Endereco endereco = new Endereco(rset.getString("rua_endereco"),
                         rset.getString("numero_endereco"),

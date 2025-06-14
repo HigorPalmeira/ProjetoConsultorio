@@ -7,6 +7,7 @@ package main.java.higorpalmeira.com.github.consultorio.model.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Especialidade;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
@@ -21,7 +22,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
     public int insert(Medico medico) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("INSERT INTO medico (nome, crm, id_especialidade, telefone, email) ")
+                .append("INSERT INTO medico (nome, crm, id_especialidade, id_endereco, telefone, email) ")
                 .append("VALUES (?, ?, ?, ?, ?)");
         String insert = sqlBuilder.toString();
         
@@ -31,6 +32,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
             line = DAOGenerico.executarComando(insert, medico.getNome(),
                                                         medico.getCrm(),
                                                         medico.getEspecialidade().getId(),
+                                                        medico.getEndereco().getId(),
                                                         medico.getTelefone(),
                                                         medico.getEmail());
             
@@ -49,6 +51,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 .append("nome = ?, ")
                 .append("crm = ?, ")
                 .append("id_especialidade = ?, ")
+                .append("id_endereco = ?, ")
                 .append("status = ?, ")
                 .append("telefone = ?, ")
                 .append("email = ?, ")
@@ -61,6 +64,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
             line = DAOGenerico.executarComando(update, medico.getNome(),
                                                         medico.getCrm(),
                                                         medico.getEspecialidade().getId(),
+                                                        medico.getEndereco().getId(),
                                                         medico.getStatus().getDescricao(),
                                                         medico.getTelefone(),
                                                         medico.getEmail(),
@@ -89,7 +93,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
     @Override
     public List<Medico> selectAll() {
         ResultSet rset;
-        String select = "SELECT * FROM medico_especialidade ORDER BY id_medico ASC";
+        String select = "SELECT * FROM medico_detalhado ORDER BY id_medico ASC";
         List<Medico> listaMedico = new ArrayList<>();
         try {
             rset = DAOGenerico.executarConsulta(select);
@@ -105,6 +109,10 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 especialidade.setDescricao( rset.getString("descricao_especialidade") );
                 medico.setEspecialidade(especialidade);
                 
+                Endereco endereco = new Endereco( rset.getString("rua_endereco"), rset.getString("numero_endereco"), rset.getString("bairro_endereco"), rset.getString("cidade_endereco"), rset.getString("estado_endereco"), rset.getString("cep_endereco"));
+                endereco.setId( rset.getInt("id_endereco") );
+                
+                medico.setEndereco(endereco);
                 medico.setTelefone( rset.getString("telefone_medico") );
                 medico.setEmail( rset.getString("email_medico") );
                 
@@ -141,6 +149,12 @@ public class MedicoDAOJDBC implements MedicoDAO {
 
                 especialidade.setId( rset.getInt("id_especialidade") );
                 especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                
+                Endereco endereco = new Endereco( rset.getString("rua_endereco"), rset.getString("numero_endereco"), rset.getString("bairro_endereco"), rset.getString("cidade_endereco"), rset.getString("estado_endereco"), rset.getString("cep_endereco"));
+                endereco.setId( rset.getInt("id_endereco") );
+                
+                medico.setEndereco(endereco);
+                
                 medico.setEspecialidade(especialidade);
                 
                 medico.setTelefone( rset.getString("telefone_medico") );

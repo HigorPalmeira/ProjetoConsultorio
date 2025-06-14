@@ -15,6 +15,7 @@ public class Medico {
     private String nome;
     private String crm;
     private Especialidade especialidade;
+    private Endereco endereco;
     private Status status;
     private String telefone;
     private String email;
@@ -75,9 +76,17 @@ public class Medico {
         this.status = status;
     }
 
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     @Override
     public String toString() {
-        return "Medico{" + "id=" + id + ", nome=" + nome + ", crm=" + crm + ", especialidade=" + especialidade + ", status=" + status + ", telefone=" + telefone + ", email=" + email + '}';
+        return "Medico{" + "id=" + id + ", nome=" + nome + ", crm=" + crm + ", especialidade=" + especialidade + ", endereco=" + endereco + ", status=" + status + ", telefone=" + telefone + ", email=" + email + '}';
     }
     
 }

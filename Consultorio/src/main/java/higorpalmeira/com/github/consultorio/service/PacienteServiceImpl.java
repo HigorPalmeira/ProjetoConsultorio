@@ -14,6 +14,8 @@ import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.PacienteDAO;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteStatus;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
@@ -46,11 +48,6 @@ public class PacienteServiceImpl implements IPacienteService {
             return false;
         }
         
-        // verificar sexo
-        if ( ! SEXO.contains(sexo.toLowerCase()) ) {
-            sexo = "não definido";
-        }
-        
         // verificar data de nascimento
         if ( ! Validator.isDataNascimento(dataNascimento) ) {
             return false;
@@ -66,12 +63,14 @@ public class PacienteServiceImpl implements IPacienteService {
             return false;
         }
         
+        PacienteSexo enumSexo = PacienteSexo.fromDescricao(sexo.trim().toUpperCase());
+        
         Paciente paciente = new Paciente();
         paciente.setNome(nome);
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
-        paciente.setSexo(sexo);
-        paciente.setStatus( STATUS_DEFAULT );
+        paciente.setSexo(enumSexo);
+        paciente.setStatus( PacienteStatus.fromDescricao( STATUS_DEFAULT ) );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
         
@@ -93,23 +92,20 @@ public class PacienteServiceImpl implements IPacienteService {
         // verificar data de nascimento
         if ( ! Validator.isDataNascimento(dataNascimento) ) return false;
         
-        // verificar sexo
-        if ( ! SEXO.contains(sexo.toLowerCase()) ) {
-            sexo = "não definido";
-        }
-        
         // verificar email
         if ( ! Validator.isEmail(email) ) return false;
         
         // verificar telefone
         if (telefone == null || telefone.trim().isBlank() || telefone.trim().length() > 20) return false;
         
+        PacienteSexo enumSexo = PacienteSexo.fromDescricao(sexo.trim().toUpperCase());
+        
         Paciente paciente = new Paciente();
         paciente.setNome(nome);
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
-        paciente.setSexo(sexo);
-        paciente.setStatus(status);
+        paciente.setSexo(enumSexo);
+        paciente.setStatus( PacienteStatus.fromDescricao( STATUS_DEFAULT ) );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
         

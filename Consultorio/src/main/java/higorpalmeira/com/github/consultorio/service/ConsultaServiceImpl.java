@@ -6,7 +6,6 @@ package main.java.higorpalmeira.com.github.consultorio.service;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +14,7 @@ import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Consulta;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.ConsultaStatus;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
@@ -23,35 +23,26 @@ import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
  */
 public class ConsultaServiceImpl implements IConsultaService {
     
-    private final ConsultaDAO consultaDAO;
-    
-    private final List<String> STATUS_VALIDOS = Arrays.asList(
-            "agendada", "realizada", "cancelada"
-    );
+    private final ConsultaDAO consultaDAO;    
     
     public ConsultaServiceImpl(ConsultaDAO consultaDAO) {
         this.consultaDAO = consultaDAO;
     }
 
     @Override
-    public boolean criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes, String status) {
+    public boolean criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes) {
         
         if (idMedico < 0 || idPaciente < 0) {
-            return false;
-        }
-        
-        if ( !STATUS_VALIDOS.contains(status.toLowerCase())) {
             return false;
         }
         
         if ( ! Validator.isDataHoraConsulta(dataHora) ) {
             return false;
         }
-        
+
         Consulta consulta = new Consulta();
         consulta.setDataHorario(dataHora);
         consulta.setObservacoes(observacoes);
-        consulta.setStatus(status.toLowerCase());
         
         Medico medico = new MedicoServiceImpl(DAOFactory.criarMedicoDAO()).buscarMedicoPorId(idMedico);
         Paciente paciente = new PacienteServiceImpl(DAOFactory.criarPacienteDAO()).buscarPacientePorId(idPaciente);
@@ -70,19 +61,17 @@ public class ConsultaServiceImpl implements IConsultaService {
             return false;
         }
         
-        if ( !STATUS_VALIDOS.contains(status.toLowerCase())) {
-            return false;
-        }
-        
         if ( ! Validator.isDataHoraConsulta(dataHora) ) {
             return false;
         }
+        
+        ConsultaStatus enumStatus = ConsultaStatus.fromDescricao(status.trim().toUpperCase());
         
         Consulta consulta = new Consulta();
         consulta.setId(id);
         consulta.setDataHorario(dataHora);
         consulta.setObservacoes(observacoes);
-        consulta.setStatus(status.toLowerCase());
+        consulta.setStatus(enumStatus);
         
         Medico medico = new MedicoServiceImpl(DAOFactory.criarMedicoDAO()).buscarMedicoPorId(idMedico);
         Paciente paciente = new PacienteServiceImpl(DAOFactory.criarPacienteDAO()).buscarPacientePorId(idPaciente);
@@ -123,11 +112,8 @@ public class ConsultaServiceImpl implements IConsultaService {
     @Override
     public Consulta buscarConsultaPorId(int id) {
         
-        if (id < 0) {
-            return null;
-        }
-        
         return consultaDAO.selectId(id);
+        
     }
     
     

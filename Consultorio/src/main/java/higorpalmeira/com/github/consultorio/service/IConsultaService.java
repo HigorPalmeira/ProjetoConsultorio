@@ -14,7 +14,7 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Consulta;
  */
 public interface IConsultaService {
     
-    public boolean criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes, String status);
+    public boolean criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes);
     
     public boolean atualizarConsulta(int id, int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes, String status);
     

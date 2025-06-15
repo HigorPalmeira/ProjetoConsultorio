@@ -21,9 +21,9 @@ public class ConsultaController {
         this.consultaService = consultaService;
     }
     
-    public void criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes, String status) {
+    public void criarConsulta(int idMedico, int idPaciente, LocalDateTime dataHora, String observacoes) {
         
-        if (this.consultaService.criarConsulta(idMedico, idPaciente, dataHora, observacoes, status)) {
+        if (this.consultaService.criarConsulta(idMedico, idPaciente, dataHora, observacoes)) {
             System.out.println("Consulta criada com sucesso!");
             
         } else {
@@ -75,7 +75,7 @@ public class ConsultaController {
         
         Consulta consulta = consultaService.buscarConsultaPorId(id);
         
-        if (consulta == null || (consulta.getId() == 0 && consulta.getObservacoes() == null)) {
+        if ((consulta.getId() == 0 && consulta.getObservacoes() == null)) {
             System.out.printf("A consulta com o ID '%d' não existe no sistema!\n", id);
             
         } else {

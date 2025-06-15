@@ -5,6 +5,7 @@
 package main.java.higorpalmeira.com.github.consultorio.model.entity;
 
 import java.time.LocalDateTime;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.ConsultaStatus;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Consulta {
     private Paciente paciente;
     private LocalDateTime dataHorario;
     private String observacoes;
-    private String status;
+    private ConsultaStatus status;
 
     public int getId() {
         return id;
@@ -57,19 +58,19 @@ public class Consulta {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
-    }
+    } 
 
-    public String getStatus() {
+    public ConsultaStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ConsultaStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
         return "Consulta{" + "id=" + id + ", medico=" + medico + ", paciente=" + paciente + ", dataHorario=" + dataHorario + ", observacoes=" + observacoes + ", status=" + status + '}';
-    }    
+    }
     
 }

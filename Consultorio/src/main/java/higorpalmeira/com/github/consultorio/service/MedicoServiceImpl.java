@@ -143,11 +143,8 @@ public class MedicoServiceImpl implements IMedicoService {
     @Override
     public Medico buscarMedicoPorId(int id) {
         
-        if (id < 0) {
-            return null;
-        }
-        
         return medicoDAO.selectId(id);
+        
     }
     
 }

@@ -187,7 +187,7 @@ public class Main {
     
     private static void criarConsulta() {
         LocalDateTime dataHorario;
-        String observacoes, status;
+        String observacoes;
         int idMedico, idPaciente;
         
         scanner.nextLine();
@@ -210,9 +210,6 @@ public class Main {
         scanner.nextLine();
         
         dataHorario = LocalDateTime.of(ano, mes, dia, hora, minuto);
-        
-        System.out.println("Informe o status da consulta: ");
-        status = scanner.nextLine();
         
         System.out.println("Informe as observações: ");
         observacoes = scanner.nextLine();
@@ -237,7 +234,7 @@ public class Main {
             }
         } while(idMedico == -1);
         
-        consultaController.criarConsulta(idMedico, idPaciente, dataHorario, observacoes, status);
+        consultaController.criarConsulta(idMedico, idPaciente, dataHorario, observacoes);
         
     }
     

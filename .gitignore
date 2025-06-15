@@ -4,3 +4,4 @@
 # Database credentials
 config.properties
 database.properties
+/Consultorio/dist/

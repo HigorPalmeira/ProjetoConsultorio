@@ -132,12 +132,11 @@ public class MedicoDAOJDBC implements MedicoDAO {
         ResultSet rset;
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder
-                .append("SELECT * FROM medico_especialidade ")
+                .append("SELECT * FROM medico_detalhado ")
                 .append("WHERE id_medico = ?");
         String select = sqlBuilder.toString();
         
         Medico medico = new Medico();
-        Especialidade especialidade = new Especialidade();
         
         try {
             rset = DAOGenerico.executarConsulta(select, id);
@@ -147,6 +146,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                 medico.setCrm( rset.getString("crm_medico") );
                 medico.setStatus( Status.fromDescricao( rset.getString("status_medico") ) );
 
+                Especialidade especialidade = new Especialidade();
                 especialidade.setId( rset.getInt("id_especialidade") );
                 especialidade.setDescricao( rset.getString("descricao_especialidade") );
                 

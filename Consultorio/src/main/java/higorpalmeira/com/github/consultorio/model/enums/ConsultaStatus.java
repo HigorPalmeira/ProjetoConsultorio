@@ -11,7 +11,9 @@ package main.java.higorpalmeira.com.github.consultorio.model.enums;
 public enum ConsultaStatus {
     AGENDADA("AGENDADA"),
     REALIZADA("REALIZADA"),
-    CANCELADA("CANCELADA");
+    CANCELADA("CANCELADA"),
+    CONFIRMADA("CONFIRMADA"),
+    FALTOU("FALTOU");
     
     private final String descricao;
     

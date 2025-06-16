@@ -40,7 +40,7 @@ public class ConsultaDAOJDBC implements ConsultaDAO {
                                                         Timestamp.valueOf(consulta.getDataHorario()),
                                                         consulta.getObservacoes());
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         
@@ -71,7 +71,7 @@ public class ConsultaDAOJDBC implements ConsultaDAO {
                     consulta.getStatus().getDescricao(),
                     consulta.getId());
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         
@@ -146,7 +146,7 @@ public class ConsultaDAOJDBC implements ConsultaDAO {
                 listaConsultas.add(consulta);
             }
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         
@@ -207,7 +207,7 @@ public class ConsultaDAOJDBC implements ConsultaDAO {
                 consulta.setPaciente(paciente);
             }
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         

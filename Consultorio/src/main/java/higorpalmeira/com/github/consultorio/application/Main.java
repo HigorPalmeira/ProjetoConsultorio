@@ -434,14 +434,59 @@ public class Main {
     
     private static void listarMedicos() {
         
-        System.out.println("Deseja listar (1) TODOS ou (2) ESPECÍFICO? ");
-        if (scanner.nextInt() == 1) {
-            medicoController.listarTodosMedicos();
-            
-        } else {
-            System.out.println("Informe o ID do médico para ser listado: ");
-            int id = scanner.nextInt();
-            medicoController.buscarMedicoPorId(id);
+        int i;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tListar Médicos\t===");
+        System.out.println("Selecione a opção de listagem de médicos: ");
+        System.out.println("[ 1 ] Todos \n[ 2 ] Por ID \n[ 3 ] Por CRM \n[ 4 ] Por Telefone \n[ 5 ] Por Status \n[ 6 ] Por Especialidade \n[ 9 ] Cancelar");
+        int opcao = scanner.nextInt();
+        
+        scanner.nextLine();
+        
+        switch(opcao) {
+            case 1 -> medicoController.listarTodosMedicos();
+                
+            case 2 -> {
+                System.out.println("Informe o ID do médico para ser listado: ");
+                int id = scanner.nextInt();
+                medicoController.buscarMedicoPorId(id);
+            }
+                
+            case 3 -> {
+                System.out.println("Informe o CRM do médico para ser listado: ");
+                String crm = scanner.nextLine().trim().toUpperCase();
+                medicoController.buscarMedicoPorCrm(crm);
+            }
+                
+            case 4 -> {
+                System.out.println("Informe o Telefone do paciente para ser listado: ");
+                String telefone = scanner.nextLine().trim();
+                medicoController.buscarMedicoPorTelefone(telefone);
+            }
+                
+            case 5 -> {
+                System.out.println("Informe o Status do médico para ser listado: ");
+                i = 0;
+                for (Status status : Status.values()) {
+                    System.out.printf("[ %d ] %s\n", i, status.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                medicoController.buscarMedicoPorStatus( Status.values()[i].getDescricao() );
+            }
+                
+            case 6 -> {
+                System.out.println("Informe o ID da especialidade do médico para ser listado: ");
+                especialidadeController.listarTodasEspecialidades();
+                i = scanner.nextInt();
+                medicoController.buscarMedicoPorEspecialidade( i );
+            }
+                
+            case 9 -> System.out.println("Cancelando listagem!");
+                
+            default -> System.out.println("Opção inválida!");
         }
         
     }

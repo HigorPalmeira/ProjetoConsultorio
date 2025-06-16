@@ -5,6 +5,7 @@
 package main.java.higorpalmeira.com.github.consultorio.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -146,5 +147,60 @@ public class MedicoServiceImpl implements IMedicoService {
         return medicoDAO.selectId(id);
         
     }
+
+    @Override
+    public Medico buscarMedicoPorCrm(String crm) {
+        
+        Medico medico = new Medico();
+        
+        if ( ! Validator.isCrm(crm) ) {
+            return medico;
+        }
+        
+        medico = medicoDAO.selectCrm(crm);
+        
+        return medico;
+        
+    }
+
+    @Override
+    public List<Medico> buscarMedicoPorEspecialidade(int idEspecialidade) {
+        
+        List<Medico> listaMedicos = new ArrayList<>();
+        
+        if (idEspecialidade < 0) return listaMedicos;
+        
+        listaMedicos = medicoDAO.selectEspecialidade(idEspecialidade);
+        
+        return listaMedicos;
+        
+    }
+
+    @Override
+    public List<Medico> buscarMedicoPorStatus(String status) {
+        
+        Status enumStatus = Status.fromDescricao(status.trim().toUpperCase());
+        
+        return medicoDAO.selectStatus(enumStatus);
+        
+    }
+
+    @Override
+    public List<Medico> buscarMedicoPorTelefone(String telefone) {
+        
+        List<Medico> listaMedicos = new ArrayList<>();
+        
+        // verificar telefone
+        if (telefone == null || telefone.isBlank() || telefone.length() > 20) {
+            return listaMedicos;
+        }
+        
+        listaMedicos = medicoDAO.selectTelefone(telefone.trim());
+        
+        return listaMedicos;
+        
+    }
+    
+    
     
 }

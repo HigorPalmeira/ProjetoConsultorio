@@ -5,7 +5,10 @@
 package main.java.higorpalmeira.com.github.consultorio.controller;
 
 import java.util.List;
+import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
+import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
+import main.java.higorpalmeira.com.github.consultorio.service.IEspecialidadeService;
 import main.java.higorpalmeira.com.github.consultorio.service.IMedicoService;
 
 /**
@@ -80,6 +83,65 @@ public class MedicoController {
         } else {
             System.out.println(medico.toString());
             
+        }
+        
+    }
+    
+    public void buscarMedicoPorCrm(String crm) {
+        
+        Medico medico = this.medicoService.buscarMedicoPorCrm(crm);
+        
+        if (medico == null || ( medico.getId() == 0 && medico.getCrm() == null )) {
+            System.out.printf("O médico com o CRM '%s' não existe no sistema!\n", crm);
+            
+        } else {
+            System.out.println(medico.toString());
+            
+        }
+        
+    }
+    
+    public void buscarMedicoPorStatus(String status) {
+        
+        List<Medico> listaMedicos = this.medicoService.buscarMedicoPorStatus(status);
+        
+        if (listaMedicos.isEmpty()) {
+            System.out.printf("Não há médicos cadastrados no sistema com o status '%s'!\n", status);
+            
+        } else {
+            for (Medico medico : listaMedicos) {
+                System.out.println(medico.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarMedicoPorTelefone(String telefone) {
+        
+        List<Medico> listaMedicos = this.medicoService.buscarMedicoPorTelefone(telefone);
+        
+        if (listaMedicos.isEmpty()) {
+            System.out.printf("Não há médicos cadastrados no sistema com o telefone '%s'!\n", telefone);
+            
+        } else {
+            for (Medico medico : listaMedicos) {
+                System.out.println(medico.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarMedicoPorEspecialidade(int idEspecialidade) {
+        
+        List<Medico> listaMedicos = this.medicoService.buscarMedicoPorEspecialidade(idEspecialidade);
+        
+        if (listaMedicos.isEmpty()) {
+            System.out.printf("Não há médicos cadastrados no sistema com a especialidade '%s'!\n", new EspecialidadeServiceImpl( DAOFactory.criarEspecialidadeDAO() ).buscarEspecialidadePorId(idEspecialidade).getDescricao());
+            
+        } else {
+            for (Medico medico : listaMedicos) {
+                System.out.println(medico.toString());
+            }
         }
         
     }

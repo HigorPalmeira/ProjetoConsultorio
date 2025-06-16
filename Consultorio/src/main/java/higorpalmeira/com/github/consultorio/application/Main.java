@@ -7,12 +7,15 @@ package main.java.higorpalmeira.com.github.consultorio.application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import jdk.jshell.Snippet;
 import main.java.higorpalmeira.com.github.consultorio.controller.ConsultaController;
 import main.java.higorpalmeira.com.github.consultorio.controller.EnderecoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeController;
 import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 import main.java.higorpalmeira.com.github.consultorio.service.ConsultaServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.EnderecoServiceImpl;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
@@ -581,15 +584,63 @@ public class Main {
     }
     
     private static void listarPacientes() {
+        int i;
         
-        System.out.println("Deseja listar (1) TODOS ou (2) ESPECÍFICO? ");
-        if (scanner.nextInt() == 1) {
-            pacienteController.listarTodosPacientes();
-            
-        } else {
-            System.out.println("Informe o ID do paciente para ser listado: ");
-            int id = scanner.nextInt();
-            pacienteController.buscarPacientePorId(id);
+        scanner.nextLine();
+        
+        System.out.println("===\tListar Pacientes\t===");
+        System.out.println("Selecione a opção de listagem de pacientes: ");
+        System.out.println("[ 1 ] Todos \n[ 2 ] Por ID \n[ 3 ] Por CPF \n[ 4 ] Por Telefone \n[ 5 ] Por Sexo \n[ 6 ] Por Status \n[ 9 ] Cancelar");
+        int opcao = scanner.nextInt();
+        
+        scanner.nextLine();
+        
+        switch(opcao) {
+            case 1 -> pacienteController.listarTodosPacientes();
+                
+            case 2 -> {
+                System.out.println("Informe o ID do paciente para ser listado: ");
+                int id = scanner.nextInt();
+                pacienteController.buscarPacientePorId(id);
+            }
+                
+            case 3 -> {
+                System.out.println("Informe o CPF do paciente para ser listado: ");
+                String cpf = scanner.nextLine().trim();
+                pacienteController.buscarPacientePorCpf(cpf);
+            }
+                
+            case 4 -> {
+                System.out.println("Informe o Telefone do paciente para ser listado: ");
+                String telefone = scanner.nextLine().trim();
+                pacienteController.buscarPacientePorTelefone(telefone);
+            }
+                
+            case 5 -> {
+                System.out.println("Informe o Sexo do paciente para ser listado: ");
+                i = 0;
+                for (PacienteSexo sexo : PacienteSexo.values()) {
+                    System.out.printf("[ %d ] %s\n", i, sexo.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                pacienteController.buscarPacientePorSexo( PacienteSexo.values()[i].getDescricao() );
+            }
+                
+            case 6 -> {
+                System.out.println("Informe o Status do paciente para ser listado: ");
+                i = 0;
+                for (Status status : Status.values()) {
+                    System.out.printf("[ %d ] %s\n", i, status.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                pacienteController.buscarPacientePorStatus( Status.values()[i].getDescricao() );
+            }
+                
+            case 9 -> System.out.println("Cancelando listagem!");
+                
+            default -> System.out.println("Opção inválida!");
         }
     }
     

@@ -168,4 +168,172 @@ public class PacienteDAOJDBC implements PacienteDAO {
         return paciente;
     }
 
+    @Override
+    public Paciente selectCpf(String cpf) {
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM paciente_detalhado ")
+                .append("WHERE cpf_paciente = ?");
+        String select = sqlBuilder.toString();
+        Paciente paciente = new Paciente();
+        try {
+
+            rset = DAOGenerico.executarConsulta(select, cpf);
+            while (rset.next()) {
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return paciente;
+    }
+
+    @Override
+    public List<Paciente> selectTelefone(String telefone) {
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM paciente_detalhado ")
+                .append("WHERE telefone_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Paciente> listaPacientes = new ArrayList<>();
+        try {
+
+            rset = DAOGenerico.executarConsulta(select, telefone);
+            while (rset.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
+
+                listaPacientes.add(paciente);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaPacientes;
+    }
+
+    @Override
+    public List<Paciente> selectSexo(PacienteSexo sexo) {
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM paciente_detalhado ")
+                .append("WHERE sexo_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Paciente> listaPacientes = new ArrayList<>();
+        try {
+
+            rset = DAOGenerico.executarConsulta(select, sexo.getDescricao());
+            while (rset.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
+
+                listaPacientes.add(paciente);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaPacientes;
+    }
+
+    @Override
+    public List<Paciente> selectStatus(Status status) {
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM paciente_detalhado ")
+                .append("WHERE status_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Paciente> listaPacientes = new ArrayList<>();
+        try {
+
+            rset = DAOGenerico.executarConsulta(select, status.getDescricao());
+            while (rset.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(rset.getInt("id_paciente"));
+                paciente.setNome(rset.getString("nome_paciente"));
+                paciente.setDataNascimento(rset.getDate("data_nascimento_paciente").toLocalDate());
+                paciente.setCpf(rset.getString("cpf_paciente"));
+                paciente.setTelefone(rset.getString("telefone_paciente"));
+                paciente.setEmail(rset.getString("email_paciente"));
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ) );
+
+                Endereco endereco = new Endereco(rset.getString("rua_endereco"),
+                        rset.getString("numero_endereco"),
+                        rset.getString("bairro_endereco"),
+                        rset.getString("cidade_endereco"),
+                        rset.getString("estado_endereco"),
+                        rset.getString("cep_endereco"));
+                endereco.setId(rset.getInt("id_endereco"));
+                paciente.setEndereco(endereco);
+
+                listaPacientes.add(paciente);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaPacientes;
+    }
+    
 }

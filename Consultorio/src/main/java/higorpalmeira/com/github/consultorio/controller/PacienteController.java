@@ -87,4 +87,62 @@ public class PacienteController {
             System.out.println(paciente.toString());
         }
     }
+    
+    public void buscarPacientePorCpf(String cpf) {
+        
+        Paciente paciente = pacienteService.buscarPacientePorCpf(cpf);
+        
+        if (paciente == null || (paciente.getId() == 0 && paciente.getNome() == null) ) {
+            System.out.printf("O paciente com o CPF '%s' não existe no sistema!\n", cpf);
+            
+        } else {
+            System.out.println(paciente.toString());
+            
+        }
+        
+    }
+    
+    public void buscarPacientePorTelefone(String telefone) {
+        
+        List<Paciente> listaPacientes = pacienteService.buscarPacientePorTelefone(telefone);
+        
+        if (listaPacientes.isEmpty()) {
+            System.out.println("Não há pacientes cadastrados no sistema com este telefone!");
+            
+        } else {
+            for (Paciente paciente : listaPacientes) {
+                System.out.println(paciente.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarPacientePorSexo(String sexo) {
+        
+        List<Paciente> listaPacientes = pacienteService.buscarPacientePorSexo(sexo);
+        
+        if (listaPacientes.isEmpty()) {
+            System.out.printf("Não há pacientes cadastrados no sistema com o sexo '%s'!\n", sexo.trim().toUpperCase());
+            
+        } else {
+            for (Paciente paciente : listaPacientes) {
+                System.out.println(paciente.toString());
+            }
+        }
+    }
+    
+    public void buscarPacientePorStatus(String status) {
+        
+        List<Paciente> listaPacientes = pacienteService.buscarPacientePorStatus(status);
+        
+        if (listaPacientes.isEmpty()) {
+            System.out.printf("Não há pacientes cadastrados no sistema com o status '%s'!\n", status.trim().toUpperCase());
+            
+        } else {
+            for (Paciente paciente : listaPacientes) {
+                System.out.println(paciente.toString());
+            }
+        }
+        
+    }
 }

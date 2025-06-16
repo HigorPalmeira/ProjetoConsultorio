@@ -7,6 +7,8 @@ package main.java.higorpalmeira.com.github.consultorio.service;
 import java.time.LocalDate;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 
 /**
  *
@@ -23,4 +25,12 @@ public interface IPacienteService {
     List<Paciente> listarTodosPaciente();
     
     Paciente buscarPacientePorId(int id);
+    
+    Paciente buscarPacientePorCpf(String cpf);
+    
+    List<Paciente> buscarPacientePorTelefone(String telefone);
+    
+    List<Paciente> buscarPacientePorSexo(String sexo);
+    
+    List<Paciente> buscarPacientePorStatus(String status);
 }

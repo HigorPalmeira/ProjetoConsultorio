@@ -6,6 +6,7 @@ package main.java.higorpalmeira.com.github.consultorio.service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -105,7 +106,7 @@ public class PacienteServiceImpl implements IPacienteService {
         paciente.setCpf(cpf);
         paciente.setDataNascimento(dataNascimento);
         paciente.setSexo(enumSexo);
-        paciente.setStatus(Status.fromDescricao( STATUS_DEFAULT ) );
+        paciente.setStatus(Status.fromDescricao( status.trim().toUpperCase() ) );
         paciente.setTelefone(telefone);
         paciente.setEmail(email);
         
@@ -143,6 +144,44 @@ public class PacienteServiceImpl implements IPacienteService {
         if (id < 0) return null;
         
         return pacienteDAO.selectId(id);
+    }
+
+    @Override
+    public Paciente buscarPacientePorCpf(String cpf) {
+        
+        // verificar cpf
+        if ( ! Validator.isCpf(cpf) ) return null;
+        
+        return pacienteDAO.selectCpf(cpf);
+        
+    }
+
+    @Override
+    public List<Paciente> buscarPacientePorTelefone(String telefone) {
+        
+        List<Paciente> listaPacientes = new ArrayList<>();
+        // verificar telefone
+        if (telefone == null || telefone.trim().isBlank() || telefone.trim().length() > 20) return listaPacientes;
+        
+        return pacienteDAO.selectTelefone(telefone);
+        
+    }
+
+    @Override
+    public List<Paciente> buscarPacientePorSexo(String sexo) {
+        
+        PacienteSexo enumSexo = PacienteSexo.fromDescricao(sexo.trim().toUpperCase());
+        
+        return pacienteDAO.selectSexo(enumSexo);
+    }
+
+    @Override
+    public List<Paciente> buscarPacientePorStatus(String status) {
+        
+        Status enumStatus = Status.fromDescricao( status.trim().toUpperCase() );
+        
+        return pacienteDAO.selectStatus(enumStatus);
+        
     }
     
     

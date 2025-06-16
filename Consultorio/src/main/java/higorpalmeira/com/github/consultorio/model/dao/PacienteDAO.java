@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 
 /**
  *
@@ -24,5 +26,13 @@ public interface PacienteDAO {
     public List<Paciente> selectAll();
     
     public Paciente selectId(int id);
+    
+    public Paciente selectCpf(String cpf);
+    
+    public List<Paciente> selectTelefone(String telefone);
+    
+    public List<Paciente> selectSexo(PacienteSexo sexo);
+    
+    public List<Paciente> selectStatus(Status status);
     
 }

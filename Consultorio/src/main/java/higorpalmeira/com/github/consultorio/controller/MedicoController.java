@@ -8,7 +8,6 @@ import java.util.List;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
 import main.java.higorpalmeira.com.github.consultorio.service.EspecialidadeServiceImpl;
-import main.java.higorpalmeira.com.github.consultorio.service.IEspecialidadeService;
 import main.java.higorpalmeira.com.github.consultorio.service.IMedicoService;
 
 /**
@@ -19,8 +18,32 @@ public class MedicoController {
     
     private final IMedicoService medicoService;
     
+    private boolean acesso;
+    
     public MedicoController(IMedicoService medicoService) {
         this.medicoService = medicoService;
+        this.acesso = false;
+    }
+    
+    public boolean getAcesso() {
+        return this.acesso;
+    }
+    
+    public void setAcesso(boolean acesso) {
+        this.acesso = acesso;
+    }
+    
+    public void loginMedico( String usuario, String senha ) {
+        
+        if (this.medicoService.loginMedico(usuario, senha)) {
+            this.acesso = true;
+            System.out.println("Acesso garantido!");
+            
+        } else {
+            this.acesso = false;
+            System.out.println("Acesso negado!");
+        }
+        
     }
     
     public void criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email) {

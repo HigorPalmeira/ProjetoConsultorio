@@ -27,6 +27,25 @@ public class MedicoServiceImpl implements IMedicoService {
     public MedicoServiceImpl(MedicoDAO medicoDAO) {
         this.medicoDAO = medicoDAO;
     }
+    
+    @Override
+    public boolean loginMedico(String usuario, String senha) {
+        
+        if (usuario == null || usuario.trim().isBlank() || usuario.trim().length() > 255) {
+            return false;
+        }
+        
+        if ( ! Validator.isCrm(senha)) {
+            return false;
+        }
+        
+        Medico medico = this.medicoDAO.selectCrm(senha);
+        
+        return !(medico == null 
+                || ( medico.getId() == 0 && medico.getCrm() == null ) 
+                || !medico.getEmail().equals(usuario));
+        
+    }
 
     @Override
     public boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email) {

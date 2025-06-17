@@ -4,6 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.application;
 
+import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -32,6 +33,8 @@ public class Main {
     
     static EnderecoController enderecoController;
     
+    private static boolean ACESSO = false;
+    
     public static void main(String[] args) {
         
         pacienteController = new PacienteController(new PacienteServiceImpl(DAOFactory.criarPacienteDAO()));
@@ -41,12 +44,63 @@ public class Main {
         
         enderecoController = new EnderecoController(new EnderecoServiceImpl(DAOFactory.criarEnderecoDAO()));
         
+        login();
         
-        menuEndereco();
-        menuEspecialidade();
-        menuMedico();
-        menuPaciente();
-        menuConsulta();
+        while(ACESSO) {
+            menuEndereco();
+            menuEspecialidade();
+            menuMedico();
+            menuPaciente();
+            menuConsulta();
+            
+            encerrarPrograma();
+        }
+        
+    }
+    
+    private static void login() {
+        
+        String usuario, senha;
+        
+        System.out.println("===\tLOGIN\t===");
+        System.out.println("[ 1 ] Paciente \n[ 2 ] Médico");
+        int opcao = scanner.nextInt();
+        
+        scanner.nextLine();
+        
+        System.out.println("\nUsuário: ");
+        usuario = scanner.nextLine().trim();
+        
+        System.out.println("Senha: ");
+        senha = scanner.nextLine().trim();
+        
+        switch(opcao) {
+            case 1:
+                System.out.println("Ainda não temos suporte para isso! Acesso negado por padrão!");
+                ACESSO = false;
+                break;
+                
+            case 2:
+                medicoController.loginMedico(usuario, senha);
+                ACESSO = medicoController.getAcesso();
+                break;
+                
+            default:
+                System.out.println("Opção inválida!");
+                ACESSO = false;
+                break;
+        }
+        
+    }
+    
+    private static void encerrarPrograma() {
+        System.out.println("Deseja encerrar o programa?");
+        System.out.println("[ 0 ] Não\t[ 1 ] Sim");
+        int opcao = scanner.nextInt();
+        
+        if (opcao == 1) {
+            ACESSO = false;
+        }
         
     }
     
@@ -510,7 +564,7 @@ public class Main {
         
         System.out.println("Informe o ID do médico: ");
         id = scanner.nextInt();
-        scanner.next();
+        scanner.nextLine();
         
         System.out.println("Informe o nome do médico: ");
         nome = scanner.nextLine();

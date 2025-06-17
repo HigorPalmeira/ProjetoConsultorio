@@ -13,6 +13,8 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
  */
 public interface IMedicoService {
     
+    boolean loginMedico(String usuario, String senha);
+    
     boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email);
     
     boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email);

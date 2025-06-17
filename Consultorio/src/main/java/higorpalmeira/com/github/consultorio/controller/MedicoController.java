@@ -46,9 +46,9 @@ public class MedicoController {
         
     }
     
-    public void criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email) {
+    public void criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email, int idEndereco) {
         
-        if (this.medicoService.criarMedico(nome, crm, idEspecialidade, telefone, email)) {
+        if (this.medicoService.criarMedico(nome, crm, idEspecialidade, telefone, email, idEndereco)) {
             System.out.println("Médico criado com sucesso!");
         
         } else {
@@ -57,9 +57,9 @@ public class MedicoController {
         
     }
     
-    public void atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email) {
+    public void atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email, int idEndereco) {
         
-        if (this.medicoService.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email)) {
+        if (this.medicoService.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email, idEndereco)) {
             System.out.println("Médico atualizado com sucesso!");
             
         } else {

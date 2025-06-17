@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.MedicoDAO;
+import main.java.higorpalmeira.com.github.consultorio.model.entity.Endereco;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Especialidade;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
@@ -48,7 +49,7 @@ public class MedicoServiceImpl implements IMedicoService {
     }
 
     @Override
-    public boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email) {
+    public boolean criarMedico(String nome, String crm, int idEspecialidade, String telefone, String email, int idEndereco) {
         
         // verificar nome
         if (nome == null || nome.trim().isBlank() || nome.trim().length() > 255) {
@@ -75,10 +76,17 @@ public class MedicoServiceImpl implements IMedicoService {
             return false;
         }
         
+        Endereco endereco = new EnderecoServiceImpl(DAOFactory.criarEnderecoDAO()).buscarEnderecoPorId(idEndereco);
+        
+        if (endereco == null || (endereco.getId() == 0 && endereco.getCep() == null) ) {
+            return false;
+        }
+        
         Medico medico = new Medico();
         medico.setNome(nome);
         medico.setCrm(crm);
         medico.setEspecialidade(especialidade);
+        medico.setEndereco(endereco);
         medico.setTelefone(telefone);
         medico.setEmail(email);
         
@@ -87,7 +95,7 @@ public class MedicoServiceImpl implements IMedicoService {
     }
 
     @Override
-    public boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email) {
+    public boolean atualizarMedico(int id, String nome, String crm, int idEspecialidade, String status, String telefone, String email, int idEndereco) {
         
         if (id < 0) {
             return false;
@@ -119,6 +127,12 @@ public class MedicoServiceImpl implements IMedicoService {
             return false;
         }
         
+        Endereco endereco = new EnderecoServiceImpl(DAOFactory.criarEnderecoDAO()).buscarEnderecoPorId(idEndereco);
+        
+        if (endereco == null || (endereco.getId() == 0 && endereco.getCep() == null) ) {
+            return false;
+        }
+        
         Status enumStatus = Status.fromDescricao(status.trim().toUpperCase());
         
         Medico medico = new Medico();
@@ -126,6 +140,7 @@ public class MedicoServiceImpl implements IMedicoService {
         medico.setNome(nome);
         medico.setCrm(crm);
         medico.setEspecialidade(especialidade);
+        medico.setEndereco(endereco);
         medico.setTelefone(telefone);
         medico.setEmail(email);
         medico.setStatus(enumStatus);

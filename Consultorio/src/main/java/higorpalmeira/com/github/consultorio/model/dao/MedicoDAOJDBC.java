@@ -36,7 +36,7 @@ public class MedicoDAOJDBC implements MedicoDAO {
                                                         medico.getTelefone(),
                                                         medico.getEmail());
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         

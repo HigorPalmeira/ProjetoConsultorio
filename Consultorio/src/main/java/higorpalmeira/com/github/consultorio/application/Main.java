@@ -100,6 +100,7 @@ public class Main {
         
         if (opcao == 1) {
             ACESSO = false;
+            System.out.println("Programa encerrado!");
         }
         
     }
@@ -525,7 +526,7 @@ public class Main {
     
     private static void criarMedico() {
         String nome, crm, telefone, email;
-        int idEspecialidade;
+        int idEspecialidade, idEndereco;
         
         scanner.nextLine();
         
@@ -553,12 +554,24 @@ public class Main {
             }
         } while(idEspecialidade == -1);
         
-        medicoController.criarMedico(nome, crm, idEspecialidade, telefone, email);
+        do {
+            
+            enderecoController.listarTodosEnderecos();
+            System.out.println("Informe o ID do endereço do médico (se não encontrar digite -1): ");
+            idEndereco = scanner.nextInt();
+            
+            if (idEndereco == -1) {
+                criarEndereco();
+            }
+            
+        } while(idEndereco == -1);
+        
+        medicoController.criarMedico(nome, crm, idEspecialidade, telefone, email, idEndereco);
     }
     
     private static void atualizarMedico() {
         String nome, crm, status, telefone, email;
-        int id, idEspecialidade;
+        int id, idEspecialidade, idEndereco;
         
         System.out.println("===\tAtualizar Médico\t===");
         
@@ -591,7 +604,19 @@ public class Main {
             }
         } while(idEspecialidade == -1);
         
-        medicoController.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email);
+        do {
+            
+            enderecoController.listarTodosEnderecos();
+            System.out.println("Informe o ID do endereço do médico (se não encontrar digite -1): ");
+            idEndereco = scanner.nextInt();
+            
+            if (idEndereco == -1) {
+                criarEndereco();
+            }
+            
+        } while(idEndereco == -1);
+        
+        medicoController.atualizarMedico(id, nome, crm, idEspecialidade, status, telefone, email, idEndereco);
         
     }
     

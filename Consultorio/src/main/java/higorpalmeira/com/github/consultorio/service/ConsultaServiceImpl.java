@@ -6,6 +6,7 @@ package main.java.higorpalmeira.com.github.consultorio.service;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,8 @@ import main.java.higorpalmeira.com.github.consultorio.model.entity.Consulta;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Medico;
 import main.java.higorpalmeira.com.github.consultorio.model.entity.Paciente;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.ConsultaStatus;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 import main.java.higorpalmeira.com.github.consultorio.util.validator.Validator;
 
 /**
@@ -113,6 +116,85 @@ public class ConsultaServiceImpl implements IConsultaService {
     public Consulta buscarConsultaPorId(int id) {
         
         return consultaDAO.selectId(id);
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorStatus(String status) {
+        
+        return consultaDAO.selectStatus( ConsultaStatus.fromDescricao(status.trim().toUpperCase()) );
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorDataHora(LocalDateTime dataHora) {
+        
+        List<Consulta> listaConsultas = new ArrayList<>();      
+        
+        if ( ! Validator.isDataHoraConsulta(dataHora) ) {
+            return listaConsultas;
+        }
+        
+        listaConsultas = consultaDAO.selectDataHota(dataHora);
+        
+        return listaConsultas;
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorIdMedico(int idMedico) {
+        
+        return consultaDAO.selectIdMedico( idMedico );
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorCrmMedico(String crm) {
+        
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        if ( ! Validator.isCrm(crm) ) {
+            return listaConsultas;
+        }
+        
+        listaConsultas = consultaDAO.selectCrmMedico(crm);
+        
+        return listaConsultas;
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorIdEspecialidadeMedico(int idEspecialidadeMedico) {
+        
+        return consultaDAO.selectIdEspecialidadeMedico(idEspecialidadeMedico);
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorStatusMedico(String status) {
+        
+        return consultaDAO.selectStatusMedico( Status.fromDescricao(status.trim().toUpperCase()) );
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorStatusPaciente(String status) {
+        
+        return consultaDAO.selectStatusPaciente( Status.fromDescricao(status.trim().toUpperCase()) );
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorSexoPaciente(String sexo) {
+        
+        return consultaDAO.selectSexoPaciente( PacienteSexo.fromDescricao(sexo.trim().toUpperCase()) );
+        
+    }
+
+    @Override
+    public List<Consulta> buscarConsultaPorIdPaciente(int idPaciente) {
+        
+        return consultaDAO.selectIdPaciente(idPaciente);
         
     }
     

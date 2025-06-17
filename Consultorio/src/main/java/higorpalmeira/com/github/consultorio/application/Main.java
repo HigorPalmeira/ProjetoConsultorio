@@ -14,6 +14,7 @@ import main.java.higorpalmeira.com.github.consultorio.controller.EspecialidadeCo
 import main.java.higorpalmeira.com.github.consultorio.controller.MedicoController;
 import main.java.higorpalmeira.com.github.consultorio.controller.PacienteController;
 import main.java.higorpalmeira.com.github.consultorio.model.dao.DAOFactory;
+import main.java.higorpalmeira.com.github.consultorio.model.enums.ConsultaStatus;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.PacienteSexo;
 import main.java.higorpalmeira.com.github.consultorio.model.enums.Status;
 import main.java.higorpalmeira.com.github.consultorio.service.ConsultaServiceImpl;
@@ -312,14 +313,139 @@ public class Main {
     
     private static void listarConsultas() {
         
-        System.out.println("Deseja listar (1) TODAS ou (2) ESPECÍFICA? ");
-        if (scanner.nextInt() == 1) {
-            consultaController.listarTodasConsultas();
-            
-        } else {
-            System.out.println("Informe o ID da consulta para ser listada: ");
-            int id = scanner.nextInt();
-            consultaController.buscarConsultaPorId(id);
+        int i;
+        
+        scanner.nextLine();
+        
+        System.out.println("===\tListar Consultas\t===");
+        System.out.println("Selecione a opção de listagem de consultas: ");
+        System.out.println("""
+                           [ 1 ] Todas 
+                           [ 2 ] Por ID da consulta 
+                           [ 3 ] Por Status da consulta
+                           [ 4 ] Por Data e Horário da consulta
+                           [ 5 ] Por ID do Médico 
+                           [ 6 ] Por CRM do Médico
+                           [ 7 ] Por ID da Especialidade do Médico
+                           [ 8 ] Por Status do Médico
+                           [ 9 ] Por ID do Paciente
+                           [ 10 ] Por Status do Paciente
+                           [ 11 ] Por Sexo do Paciente
+                           [ 12 ] Cancelar
+                           """);
+        int opcao = scanner.nextInt();
+        
+        scanner.nextLine();
+        
+        switch(opcao) {
+            case 1:
+                consultaController.listarTodasConsultas();
+                break;
+                
+            case 2:
+                System.out.println("Informe o ID da consulta para ser listada: ");
+                int id = scanner.nextInt();
+                consultaController.buscarConsultaPorId(id);
+                break;
+                
+            case 3:
+                System.out.println("Informe o ID do status da consulta para ser listada: ");
+                i = 0;;
+                for (ConsultaStatus status : ConsultaStatus.values()) {
+                    System.out.printf("[ %d ] %s\n", i, status.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorStatus( ConsultaStatus.values()[i].getDescricao() );
+                break;
+                
+            case 4:
+                System.out.println("Informe a data e hora da consulta para ser listada: ");
+                
+                System.out.println("- Dia: ");
+                int dia = scanner.nextInt();
+                System.out.println("- Mês: ");
+                int mes = scanner.nextInt();
+                System.out.println("- Ano: ");
+                int ano = scanner.nextInt();
+                
+                System.out.println("- Horas: ");
+                int horas = scanner.nextInt();
+                System.out.println("- Minutos: ");
+                int minutos = scanner.nextInt();
+                
+                LocalDateTime dataHora = LocalDateTime.of(ano, mes, dia, horas, minutos);
+                
+                consultaController.buscarConsultaPorDataHora(dataHora);
+                
+                break;
+                
+            case 5:
+                System.out.println("Informe o ID do médico para listar suas consultas: ");
+                medicoController.listarTodosMedicos();
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorIdMedico(i);
+                break;
+                
+            case 6:
+                System.out.println("Informe o CRM do médico para listar suas consultas: ");
+                String crm = scanner.nextLine().trim().toUpperCase();
+                consultaController.buscarConsultaPorCrmMedico(crm);
+                break;
+                
+            case 7:
+                System.out.println("Informe o ID da especialidade para listar consultas relacionadas: ");
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorIdEspecialidadeMedico(i);
+                break;
+                
+            case 8:
+                System.out.println("Informe o status do médico para listar as consultas: ");
+                i = 0;
+                for(Status status : Status.values()) {
+                    System.out.printf("[ %d ] %s\n", i, status.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorStatusMedico( Status.values()[i].getDescricao() );
+                break;
+                
+            case 9:
+                System.out.println("Informe o ID do paciente para listar suas consultas: ");
+                pacienteController.listarTodosPacientes();
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorIdPaciente(i);
+                break;
+             
+            case 10:
+                System.out.println("Informe o status do paciente para listar as consultas: ");
+                i = 0;
+                for(Status status : Status.values()) {
+                    System.out.printf("[ %d ] %s\n", i, status.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorStatusPaciente( Status.values()[i].getDescricao() );
+                break;
+                
+            case 11:
+                System.out.println("Informe o sexo para listar consultas: ");
+                i = 0;
+                for(PacienteSexo sexo : PacienteSexo.values()) {
+                    System.out.printf("[ %d ] %s\n", i, sexo.getDescricao());
+                    i++;
+                }
+                i = scanner.nextInt();
+                consultaController.buscarConsultaPorSexoPaciente( PacienteSexo.values()[i].getDescricao() );
+                break;
+                
+            case 12:
+                System.out.println("Cancelando listagem de consultas!");
+                break;
+                
+            default:
+                System.out.println("Opção inválida!");
+                break;
         }
         
     }

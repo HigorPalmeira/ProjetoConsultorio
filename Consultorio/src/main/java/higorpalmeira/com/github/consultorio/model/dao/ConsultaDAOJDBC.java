@@ -217,47 +217,596 @@ public class ConsultaDAOJDBC implements ConsultaDAO {
 
     @Override
     public List<Consulta> selectStatus(ConsultaStatus status) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE status_consulta = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, status.getDescricao());
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectDataHota(LocalDateTime dataHora) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE data_hora_consulta = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, Timestamp.valueOf(dataHora));
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectIdMedico(int idMedico) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE id_medico = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, idMedico);
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectCrmMedico(String crm) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE crm_medico = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, crm);
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectIdEspecialidadeMedico(int idEspecialidadeMedico) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE id_especialidade = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, idEspecialidadeMedico);
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectStatusMedico(Status status) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE status_medico = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, status.getDescricao());
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectStatusPaciente(Status status) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE status_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, status.getDescricao());
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectSexoPaciente(PacienteSexo sexo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE sexo_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, sexo.getDescricao());
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
 
     @Override
     public List<Consulta> selectIdPaciente(int idPaciente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ResultSet rset;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder
+                .append("SELECT * FROM consulta_detalhada ")
+                .append("WHERE id_paciente = ?");
+        String select = sqlBuilder.toString();
+        List<Consulta> listaConsultas = new ArrayList<>();
+        
+        try {
+            
+            rset = DAOGenerico.executarConsulta(select, idPaciente);
+            while(rset.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setId( rset.getInt("id_consulta") );
+                consulta.setDataHorario( rset.getTimestamp("data_hora_consulta").toLocalDateTime() );
+                consulta.setObservacoes( rset.getString("observacoes_consulta") );
+                consulta.setStatus( ConsultaStatus.fromDescricao( rset.getString("status_consulta") ) );
+                
+                Medico medico = new Medico();
+                medico.setId( rset.getInt("id_medico") );
+                medico.setNome( rset.getString("nome_medico") );
+                medico.setCrm( rset.getString("crm_medico") );
+                medico.setStatus(Status.fromDescricao( rset.getString("status_medico") ));
+                medico.setTelefone( rset.getString("telefone_medico") );
+                medico.setEmail( rset.getString("email_medico") );
+                
+                Especialidade especialidade = new Especialidade();
+                especialidade.setId( rset.getInt("id_especialidade") );
+                especialidade.setDescricao( rset.getString("descricao_especialidade") );
+                medico.setEspecialidade(especialidade);
+                
+                Endereco edrMedico = new Endereco(rset.getString("rua_endereco_medico"), rset.getString("numero_endereco_medico"), rset.getString("bairro_endereco_medico"), rset.getString("cidade_endereco_medico"), rset.getString("estado_endereco_medico"), rset.getString("cep_endereco_medico"));
+                medico.setEndereco(edrMedico);
+                
+                consulta.setMedico(medico);
+                
+                Paciente paciente = new Paciente();
+                paciente.setId( rset.getInt("id_paciente") );
+                paciente.setNome( rset.getString("nome_paciente") );
+                paciente.setCpf( rset.getString("cpf_paciente") );
+                paciente.setDataNascimento( rset.getDate("data_nascimento_paciente").toLocalDate() );
+                paciente.setSexo( PacienteSexo.fromDescricao( rset.getString("sexo_paciente") ) );
+                paciente.setStatus(Status.fromDescricao( rset.getString("status_paciente") ));
+                paciente.setTelefone( rset.getString("telefone_paciente") );
+                paciente.setEmail( rset.getString("email_paciente") );
+                
+                Endereco edrPaciente = new Endereco(rset.getString("rua_endereco_paciente"), rset.getString("numero_endereco_paciente"), rset.getString("bairro_endereco_paciente"), rset.getString("cidade_endereco_paciente"), rset.getString("estado_endereco_paciente"), rset.getString("cep_endereco_paciente"));
+                edrPaciente.setId( rset.getInt("id_endereco_paciente") );
+                paciente.setEndereco(edrPaciente);
+                
+                consulta.setPaciente(paciente);
+                
+                listaConsultas.add(consulta);
+            }
+            
+        } catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaConsultas;
+        
     }
     
     

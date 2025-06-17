@@ -24,4 +24,22 @@ public interface IConsultaService {
     
     public Consulta buscarConsultaPorId(int id);
     
+    public List<Consulta> buscarConsultaPorStatus(String status);
+    
+    public List<Consulta> buscarConsultaPorDataHora(LocalDateTime dataHora);
+    
+    public List<Consulta> buscarConsultaPorIdMedico(int idMedico);
+    
+    public List<Consulta> buscarConsultaPorCrmMedico(String crm);
+    
+    public List<Consulta> buscarConsultaPorIdEspecialidadeMedico(int idEspecialidadeMedico);
+    
+    public List<Consulta> buscarConsultaPorStatusMedico(String status);
+    
+    public List<Consulta> buscarConsultaPorStatusPaciente(String status);
+    
+    public List<Consulta> buscarConsultaPorSexoPaciente(String sexo);
+    
+    public List<Consulta> buscarConsultaPorIdPaciente(int idPaciente);
+    
 }

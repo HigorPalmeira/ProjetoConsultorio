@@ -85,4 +85,139 @@ public class ConsultaController {
         
     }
     
+    public void buscarConsultaPorStatus(String status) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorStatus(status);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com o status '%s' no sistema!\n", status.trim().toUpperCase());
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorDataHora(LocalDateTime dataHora) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorDataHora(dataHora);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com a data e horário '%s' no sistema!\n", dataHora.toString());
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorIdMedico(int idMedico) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorIdMedico(idMedico);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com o ID do médico '%d' no sistema!\n", idMedico);
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorCrmMedico(String crm) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorCrmMedico(crm);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com o CRM do médico '%s' no sistema!\n", crm);
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorIdEspecialidadeMedico(int idEspecialidadeMedico) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorIdEspecialidadeMedico(idEspecialidadeMedico);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com o ID da especialidade '%d' no sistema!\n", idEspecialidadeMedico);
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorStatusMedico(String status) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorStatusMedico(status);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com médicos do status '%s' no sistema!\n", status.trim().toUpperCase());
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorStatusPaciente(String status) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorStatusPaciente(status);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com pacientes do status '%s' no sistema!\n", status.trim().toUpperCase());
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorSexoPaciente(String sexo) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorSexoPaciente(sexo);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com pacientes do sexo '%s' no sistema!\n", sexo.trim().toUpperCase());
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
+    public void buscarConsultaPorIdPaciente(int idPaciente) {
+        
+        List<Consulta> listaConsultas = consultaService.buscarConsultaPorIdPaciente(idPaciente);
+        
+        if (listaConsultas.isEmpty()) {
+            System.out.printf("Não há consultas com ID do paciente '%d' no sistema!\n", idPaciente);
+            
+        } else {
+            for (Consulta consulta : listaConsultas) {
+                System.out.println(consulta.toString());
+            }
+        }
+        
+    }
+    
 }

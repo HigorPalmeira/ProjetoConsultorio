@@ -17,8 +17,31 @@ public class PacienteController {
     
     private final IPacienteService pacienteService;
     
+    private boolean acesso;
+    
     public PacienteController(IPacienteService pacienteService) {
         this.pacienteService = pacienteService;
+    }
+    
+    public boolean getAcesso() {
+        return this.acesso;
+    }
+    
+    public void setAcesso(boolean acesso) {
+        this.acesso = acesso;
+    }
+    
+    public void loginPaciente( String usuario, String senha ) {
+        
+        if (this.pacienteService.loginPaciente(usuario, senha)) {
+            this.acesso = true;
+            System.out.println("Acesso garantido!");
+            
+        } else {
+            this.acesso = false;
+            System.out.println("Acesso negado!");
+        }
+        
     }
     
     public void criarPaciente(String nome, String cpf, LocalDate dataNascimento,

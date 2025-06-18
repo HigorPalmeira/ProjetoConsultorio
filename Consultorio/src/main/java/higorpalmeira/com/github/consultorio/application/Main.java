@@ -4,7 +4,6 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.application;
 
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;

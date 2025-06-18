@@ -37,6 +37,25 @@ public class PacienteServiceImpl implements IPacienteService {
     }
 
     @Override
+    public boolean loginPaciente(String usuario, String senha) {
+        
+        if (usuario == null || usuario.trim().isBlank() || usuario.trim().length() > 255) {
+            return false;
+        }
+        
+        if ( ! Validator.isCpf(senha) ) {
+            return false;
+        }
+        
+        Paciente paciente = this.pacienteDAO.selectCpf(senha);
+        
+        return !(paciente == null 
+                || (paciente.getId() == 0 && paciente.getCpf() == null) 
+                || !paciente.getEmail().equals(usuario));
+        
+    }
+    
+    @Override
     public boolean criarPaciente(String nome, String cpf, LocalDate dataNascimento, String sexo, String telefone, String email, int idEndereco) {
         
         // verificar nome

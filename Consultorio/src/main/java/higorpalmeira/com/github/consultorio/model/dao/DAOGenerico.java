@@ -4,6 +4,7 @@
  */
 package main.java.higorpalmeira.com.github.consultorio.model.dao;
 
+import com.mysql.cj.jdbc.CallableStatement;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Properties;
 
 /**
@@ -57,7 +59,7 @@ public class DAOGenerico {
         return conexao;
     }
     
-     public static int executarComando(String query, Object... params) throws SQLException, ClassNotFoundException {
+    public static int executarComando(String query, Object... params) throws SQLException, ClassNotFoundException {
         PreparedStatement sql = (PreparedStatement)  getConexao().prepareStatement(query);
         for (int i = 0; i < params.length; i++) {
             sql.setObject(i+1,params[i]);
@@ -65,13 +67,27 @@ public class DAOGenerico {
         int result = sql.executeUpdate();
         sql.close();
         return result;
-     }
+    }
      
-     public static ResultSet executarConsulta(String query, Object... params) throws SQLException, ClassNotFoundException {
+    public static ResultSet executarConsulta(String query, Object... params) throws SQLException, ClassNotFoundException {
         PreparedStatement sql = (PreparedStatement)  getConexao().prepareStatement(query);
         for (int i = 0; i < params.length; i++) {
             sql.setObject(i+1,params[i]);
         }
         return sql.executeQuery();
+    }
+    
+    public static int executarStoredProcedure(String query, Object... params) throws SQLException, ClassNotFoundException {
+        CallableStatement sql = (CallableStatement) getConexao().prepareCall(query);
+        
+        int i;
+        for (i = 0; i < params.length; i++) {
+            sql.setObject(i+1, params[i]);
+        }
+        sql.registerOutParameter(i+1, Types.INTEGER);
+        
+        sql.execute();
+        
+        return sql.getInt(i+1);
     }
 }

@@ -87,23 +87,8 @@ create table consulta (
 		on delete set null
 );
 
--- Índices
-
-create index idx_paciente_cpf_email -- login de usuários
-on paciente(cpf, email);
-
-create index idx_medico_crm_email -- login de usuários
-on medico(crm, email);
 
 -- Views
-
-create view paciente_login as 
-select email, cpf
-from paciente;
-
-create view medico_login as 
-select email, crm
-from medico;
 
 create view paciente_detalhado as 
 select p.id as id_paciente,
